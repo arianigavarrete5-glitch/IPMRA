@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Departamentos IPMRA</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+   * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  padding-top: 70px;
+  background-color: white;
+}
+
+/* ====== MENU SUPERIOR ====== */
+.menu {
+  background: linear-gradient(90deg,#34791d,#52bd2e);
+  padding: 10px 5%; /* separación lateral como en inicio.html */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* alinear contenido al inicio para que logo quede a la izquierda */
+}
+.scrolled {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  background: linear-gradient(90deg,#2c6619,#4aa626);
+}
+.alineacion-imra-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  
+}
+.alineacion-imra-logo a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: white;
+}
+.alineacion-logo img {
+  border-radius: 50%;
+  border: none;
+}
+
+/* ====== MENU OPCIONES ====== */
+.alineacion-menu {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin-left: auto; /* empuja el menú hacia la derecha como en inicio.html */
+}
+.alineacion-menu li { position: relative; }
+    .alineacion-menu a {
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--menu-text, #fff);
+      transition: all 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+.alineacion-menu a:hover {
+  background-color: #ffea4d;
+  color: #fff;
+}
+
+/* ====== SUBMENÚ ====== */
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%; left: 0;
+  background: white;
+  min-width: 220px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 999;
+}
+.submenu a {
+  color: #333;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+}
+.submenu a:hover {
+  background: #ffea4d;
+  color: white;
+}
+.alineacion-menu li.show-submenu .submenu { display: block; }
+.arrow { font-size: 1.5rem; transition: transform 0.3s ease; }
+.show-submenu > a .arrow { transform: rotate(180deg); }
+
+/* ====== BOTON CREDITOS ====== */
+.boton-creditos {
+  background-color: #ffea4d;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+.boton-creditos a {
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  display: inline-block;
+}
+.boton-creditos:hover { background-color: #ffea4d; }
+
+/* Garantizar que SOLO el botón "Créditos" en el menú tenga border-radius 30px
+   y que no afecte a otros botones. Se usa mayor especificidad y !important
+   para evitar que reglas por página lo sobreescriban accidentalmente. */
+.alineacion-menu .boton-creditos > a {
+  border-radius: 30px !important;
+}
+
+@media (max-width: 980px){
+  .alineacion-menu{
+    display:none !important;
+    position:absolute; top:100%; left:0; right:0;
+    background: linear-gradient(90deg,#34791d,#52bd2e);
+    flex-direction:column; gap:0; padding:10px; border-radius:8px; z-index:1100;
+  }
+  .alineacion-menu.show{ display:flex !important; }
+}
+
+/* Centrar la imagen solo en la tarjeta "Taller de Hogar" */
+.card[aria-label="Taller de Hogar"] .card-face.card-front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px; /* mantiene algo de espacio alrededor */
+}
+.card[aria-label="Taller de Hogar"] .card-face.card-front img {
+  max-width: 100%;
+  max-height: 220px; /* limita altura para que no desborde la tarjeta */
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Aplicar mismo centrado/tamaño a Metales y Agropecuaria */
+.card[aria-label="Taller de Metales"] .card-face.card-front,
+.card[aria-label="Taller Agropecuaria"] .card-face.card-front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+.card[aria-label="Taller de Metales"] .card-face.card-front img,
+.card[aria-label="Taller Agropecuaria"] .card-face.card-front img {
+  max-width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  display: block;
+ 	margin: 0 auto;
+}
+
+    /* ===== TITULO ===== */
+    h1.btn-departamentos {
+      margin-top: 40px;
+      font-size: 2rem;
+      text-align: center;
+      font-weight: 700;
+      letter-spacing: 1px;
+      transition: color 0.8s ease;
+    }
+
+    /* ===== CONTENEDOR ===== */
+    .contenedor {
+      display: flex;
+      width: 90%;
+      max-width: 1300px;
+      margin-top: 60px;
+      gap: 50px;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      flex-wrap: wrap;
+      margin-left: 60px;
+    }
+
+    /* ===== RUEDA ===== */
+    .rueda-container {
+      position: relative;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 1s ease, background 0.6s ease;
+      flex-shrink: 0;
+    }
+
+    .departamento {
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #212121;
+      transition: all 0.6s ease;
+      transform-origin: center;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .departamento:hover,
+    .departamento.activo {
+      transform: scale(1.08);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+      color: #fff;
+    }
+
+    /* ===== PANEL DE INFORMACIÓN ===== */
+    .info-panel {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 20px;
+      backdrop-filter: blur(2px);
+      min-height: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      animation: fadeIn 0.8s ease;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+
+    .info-panel h2 {
+      font-size: 2rem;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .info-panel p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #ffffff;
+      margin-bottom: 1rem;
+    }
+
+    .personal-lista {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .persona {
+      background: rgba(252, 250, 250, 0.05);
+      padding: 10px 15px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .persona:hover {
+      background: rgba(255, 235, 59, 0.8);
+      color: #fefbfb;
+      transform: translateY(-3px);
+    }
+
+    .cargo {
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+      color: #fcf9f9;
+    }
+
+    .nombre {
+      font-weight: 400;
+      font-size: 0.9rem;
+      color: #fdfdfd;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== BOTONES DE CONTROL ===== */
+    .controles {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-control {
+      background: rgba(255, 235, 59, 0.8);
+      border: none;
+      border-radius: 50%;
+      padding: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+    }
+
+    .btn-control:hover {
+      background: #fff176;
+    }
+
+    .btn-control svg {
+      width: 24px;
+      height: 24px;
+      stroke: #ffffff;
+    }
+
+    /* ===== FOOTER ===== */
+   footer {
+  width: 100%;
+  text-align: left;
+  margin-top: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+  transition: background 1s ease;
+  color: #212121;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 5%;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 150px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-logo img {
+  width: 100px;
+}
+
+.logo-text {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.vertical-line {
+  width: 2px;
+  height: 100px;
+  background: #ffffff;
+}
+
+.vertical-ipmra {
+  line-height: 1.2;
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 3px;
+  display: inline-block;
+  text-align: center;
+}
+
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.linea-separadora {
+  width: 300px;
+  height: 2px;
+  background: #ffffff;
+  margin: 0;
+}
+
+.boton-facebook {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  background: rgba(255, 235, 59, 0.8);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+
+.boton-facebook img {
+  margin-right: 5px;
+}
+
+.boton-facebook:hover {
+  background: rgba(255, 235, 59, 1);
+  transform: scale(1.05);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 1rem 0;
+  color: #fcfcfc;
+  width: 100%;
+}
+
+.footer-line {
+  width: 100%;
+  height: 1px;
+  background: rgba(253, 251, 251, 0.2);
+  margin: 0 auto 10px;
+}
+/* ====== HAMBURGUESA ====== */
+.hamburguesa {
+  display: none;
+  flex-direction: column;
+  justify-content: left;
+  cursor: pointer;
+  width: 30px;
+  height: 25px;
+  position: relative;
+  z-index: 1100;
+}
+.hamburguesa span {
+  height: 3px;
+  width: 100%;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.4s ease;
+  position: absolute;
+}
+.hamburguesa span:nth-child(1) { top: 0; }
+.hamburguesa span:nth-child(2) { top: 10px; }
+.hamburguesa span:nth-child(3) { top: 20px; }
+.hamburguesa.active span:nth-child(1) { transform: rotate(45deg); top: 10px; }
+.hamburguesa.active span:nth-child(2) { opacity:0; }
+.hamburguesa.active span:nth-child(3) { transform: rotate(-45deg); top: 10px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .contenedor {
+    flex-direction: column;
+    align-items: center;
+  }
+  .rueda-container {
+    width: 350px;
+    height: 350px;
+  }
+  .info-panel {
+    width: 90%;
+  }
+
+  .alineacion-menu {
+    display: none;
+    width: 90%;
+    margin-left:20px;
+  }
+
+  .alineacion-menu.show {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: rgba(255,255,255,0.03);
+    margin-top: -6px;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  .alineacion-menu > li > a {
+    padding: 12px 14px;
+    border-radius: 8px;
+  }
+
+  nav.menu {
+    padding: 0.6rem 1rem;
+  }
+
+}
+
+/* Mostrar hamburguesa en móviles: regla MOVIDA aquí (nivel raíz dentro del media) */
+@media (max-width: 980px) {
+  .hamburguesa { 
+    display: flex;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1300;
+  }
+}
+
+/* ======= PARCHE RESPONSIVE (MÓVIL / TABLET) - NO TOCA ESCRITORIO ======= */
+/* Solo aplica cuando la ventana es ≤900px */
+@media (max-width: 900px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  /* Ajustes rueda / panel */
+  .contenedor { margin-top: 22px !important; width: 94% !important; gap: 18px !important; }
+  .rueda-container { width: 360px !important; height: 360px !important; }
+  .departamento { width: 110px !important; height: 110px !important; font-size: .6rem !important; }
+  .info-panel { min-height: 260px !important; padding: 16px !important; }
+
+  /* botones control más pequeños */
+  .controles { margin-top: 14px !important; gap: 12px !important; }
+  .btn-control { padding: 8px !important; }
+
+  /* footer adaptado */
+  .footer-container { gap: 30px !important; padding-bottom: 18px; }
+  .footer-logo img { width: 82px !important; }
+  .vertical-line { height: 80px !important; }
+
+  /* evitar overflow lateral por margen-left en .contenedor */
+  .contenedor { margin-left: 0 !important; }
+
+  /* mantener logo y título legibles */
+  h1.btn-departamentos { font-size: 1.45rem !important; margin-top: 8px !important; }
+
+  /* hacer que la rueda no se desborde en pantallas muy pequeñas */
+  @media (max-width: 480px) {
+    .rueda-container { width: 300px !important; height: 300px !important; }
+    .departamento { width: 90px !important; height: 90px !important; font-size: .6rem !important; }
+    .info-panel { min-height: 220px !important; padding: 14px !important; border-radius: 14px !important; }
+  }
+  @media (max-width: 360px) {
+    .rueda-container { width: 260px !important; height: 260px !important; }
+    .departamento { width: 72px !important; height: 72px !important; font-size: .6rem !important; }
+  }
+}
+ /* ====== RESPONSIVE ====== */
+
+@media (max-width: 768px) {
+  .alineacion-menu {
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    background: linear-gradient(90deg,#34791d,#52bd2e );
+    width: 90%;
+    border-radius: 8px;
+    animation: slideDown 0.4s ease forwards;
+    position: absolute;
+    top: 100%; /* Aparece debajo del nav */
+    left: 0;
+  }
+  .alineacion-menu.show {
+    display: flex;
+    background: linear-gradient(90deg,#34791d,#52bd2e );
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+} 
+
+/* ---------- Fallback: asegurar color de texto en submenu (última regla) ---------- */
+.alineacion-menu .submenu a { color: #333 !important; } /* por defecto escritorio */
+@media (max-width: 980px) {
+  .alineacion-menu .submenu a { color: #333 !important; } /* por defecto mobile */
+}
+
+  </style>
+</head>
+
+<body>
+  <!-- HEADER (reemplazado por el header que me diste, pero adaptado para mantener los IDs y comportamiento JS) -->
+  <header id="header">
+    <nav class="menu" id="menu">
+      <div class="alineacion-imra-logo">
+        <a href="index.html">
+          <span class="alineacion-logo">
+            <img src="Imagenes/IMRA-logo.png" alt="logo" width="40px" />
+          </span>
+          <span class="alineacion-imra">IPMRA</span>
+        </a>
+      </div>
+
+      <!-- menús (se colocan antes del markup de hamburguesa para que el dropdown quede centrado correctamente) -->
+      <ul class="alineacion-menu" id="menu-opciones" role="menubar" aria-hidden="false">
+        <li role="none"><a role="menuitem" href="index.html">Inicio</a></li>
+        <li class="submenu-container" role="none">
+          <a href="#" class="submenu-toggle" role="menuitem" aria-haspopup="true" aria-expanded="false">Nosotros <span class="arrow" aria-hidden="true">▾</span></a>
+          <ul class="submenu" role="menu" aria-label="Nosotros">
+            <li role="none"><a role="menuitem" href="nuestra-identidad.html">Nuestra Identidad</a></li>
+            <li role="none"><a role="menuitem" href="departamentos.html">Departamentos</a></li>
+            <li role="none"><a role="menuitem" href="maestros.html">Maestros</a></li>
+            <li role="none"><a role="menuitem" href="instalaciones.html">Instalaciones</a></li>
+          </ul>
+        </li>
+        <li role="none"><a role="menuitem" href="carreras.html">Oferta Académica</a></li>
+        <li role="none"><a role="menuitem" href="matriculas.html">Matrículas</a></li>
+        <li role="none" class="boton-creditos"><a role="menuitem" href="creditos.html">Créditos</a></li>
+      </ul>
+
+      <!-- HAMBURGUESA (tu HTML exacto) -->
+      <div class="hamburguesa" id="hamburguesa" role="button" aria-label="Abrir menú" aria-expanded="false" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- TITULO -->
+  <h1 class="btn-departamentos">DEPARTAMENTOS DEL IPMRA</h1>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div class="contenedor">
+    <div class="rueda-container rotar" id="rueda">
+      <div class="departamento activo" data-info="dirección" style="--angle: 0deg">DIRECCIÓN</div>
+      <div class="departamento" data-info="secretaría" style="--angle: 60deg">SECRETARÍA</div>
+      <div class="departamento" data-info="académica" style="--angle: 120deg">COORD. ACADÉMICA</div>
+      <div class="departamento" data-info="consejería" style="--angle: 180deg">CONSEJERÍA</div>
+      <div class="departamento" data-info="orientación" style="--angle: 240deg">ORIENTACIÓN</div>
+      <div class="departamento" data-info="administración" style="--angle: 300deg">ADMINISTRACIÓN</div>
+    </div>
+
+    <div class="info-panel" id="info-panel">
+    </div>
+  </div>
+
+  <!-- CONTROLES -->
+  <div class="controles">
+    <button class="btn-control" id="prev" aria-label="Anterior">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 8 8 12 12 16"/>
+      </svg>
+    </button>
+
+    <button class="btn-control" id="next" aria-label="Siguiente">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 8 16 12 12 16"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="Imagenes/IMRA-logo.png" alt="logo">
+        <div class="logo-text">
+          <div class="vertical-line"></div>
+          <span class="vertical-ipmra">I<br>P<br>M<br>R<br>A</span>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <h4>Síguenos en nuestras redes sociales</h4>
+        <div class="linea-separadora"></div>
+        <a class="boton-facebook" href="#" target="_blank">
+          <img src="Imagenes/facebook.png" alt="facebook"> Visita nuestro Facebook
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-line"></div>
+      <p>© 2025 Instituto Polivalente Modesto Rodas Alvarado - Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+  const ruedaContainer = document.querySelector(".rueda-container");
+  const departamentos = document.querySelectorAll(".departamento");
+  const infoPanel = document.getElementById("info-panel");
+  const header = document.getElementById("header");
+  const footer = document.getElementById("footer");
+  const logoIPMRA = document.querySelector(".alineacion-imra");
+  const tituloDepartamentos = document.querySelector(".btn-departamentos");
+  const menu = document.getElementById("menu");
+  const menuOpciones = document.getElementById("menu-opciones");
+
+    let index = 0;
+    const total = departamentos.length;
+
+    const infoDepartamentos = {
+      dirección: {
+        titulo: "DIRECCIÓN",
+        texto: "La Dirección coordina todas las actividades institucionales, garantiza el cumplimiento de los objetivos educativos y promueve el desarrollo académico y humano de la comunidad estudiantil.",
+        personal: [
+          { titulo: "Director(a)", nombre: "Mara Ondina Lopez Fonseca" },
+          { titulo: "Sub Director", nombre: "Fredy Orlando Turcios Castillo" },
+          { titulo: "Sub Directora", nombre: "Irma Esperanza Martinez Hernándes" }
+        ]
+      },
+      secretaría: {
+        titulo: "SECRETARÍA",
+        texto: "Gestiona documentación académica, registros de estudiantes y brinda apoyo administrativo esencial para el funcionamiento institucional.",
+        personal: [
+          { titulo: "Secretario(a)", nombre: "Flor Maria Zelaya Ramos" },
+          { titulo: "Asistente", nombre: "Nancy Gabriela Cruz Garcia" },
+          { titulo: "Asistente", nombre: "Indira Aramita Rivera Maradiaga" }
+        ]
+      },
+      académica: {
+        titulo: "COORDINACIÓN ACADÉMICA",
+        texto: "Organiza los horarios, supervisa la calidad educativa y apoya a los docentes en el proceso de enseñanza-aprendizaje.",
+        personal: [
+          { titulo: "Coordinador(a) Académica", nombre: "Francys Johana Zambrano Guevara" }
+        ]
+      },
+      consejería: {
+        titulo: "CONSEJERÍA",
+        texto: "Ofrece acompañamiento emocional y social a los estudiantes, fomentando la convivencia y el bienestar estudiantil.",
+        personal: [
+          { titulo: "Consejero(a) de Educandos", nombre: "Ricardo Perez Giron" },
+          { titulo: "Consejero(a) de Estudiantes", nombre: "Nelbi Suyapa Murillo Perez" }
+        ]
+      },
+      orientación: {
+        titulo: "ORIENTACIÓN",
+        texto: "Guía a los estudiantes en la toma de decisiones vocacionales, académicas y personales para su desarrollo integral.",
+        personal: [
+          { titulo: "Jefe(a) de Departamento", nombre: "Oscar Isidro Herrera Avelar" },
+          { titulo: "Orientador(a) Social", nombre: "Carina Lizeth Dueñas Lanza" },
+          { titulo: "Orientadora Psicológica", nombre: "Gloria Victoria Mejia Turcios" }
+        ]
+      },
+      administración: {
+        titulo: "ADMINISTRACIÓN",
+        texto: "Supervisa los recursos financieros, materiales y humanos del instituto, asegurando un ambiente óptimo para el aprendizaje.",
+        personal: [
+          { titulo: "Auxiliar de Contabilidad", nombre: "Jorge Odalis Duarte Lanza" }
+        ]
+      }
+    };
+
+    const colores = {
+      dirección: "#3A9D23",
+      secretaría: "#FF8C00",
+      académica: "#9C27B0",
+      consejería: "#E63946",
+      orientación: "#F9C80E",
+      administración: "#00A8E8"
+  
+    };
+
+    // --- (opcional) versión robusta de distribuirRueda() ---
+function distribuirRueda() {
+  const isSmall = window.innerWidth <= 900;
+  const baseDistance = 160;
+  let distance = baseDistance;
+
+  if (isSmall) {
+    const rect = ruedaContainer.getBoundingClientRect();
+    const depRect = departamentos[0].getBoundingClientRect();
+    const diameter = Math.min(rect.width || 450, rect.height || 450);
+    const halfItem = Math.max(depRect.width || 130, depRect.height || 130) / 2;
+    distance = Math.max(60, Math.round(diameter / 2 - halfItem - 8));
+  }
+
+  departamentos.forEach(function(dep, i) {
+    const ang = (360 / total) * i;
+    dep.style.transform = "rotate(" + ang + "deg) translate(" + distance + "px) rotate(" + (-ang) + "deg)";
+  });
+}
+
+// --- Reemplaza actualizarRueda() por esta versión ---
+function actualizarRueda() {
+  const isSmall = window.innerWidth <= 900;
+  const baseDistance = 160;
+  let distance = baseDistance;
+
+  if (isSmall) {
+    const rect = ruedaContainer.getBoundingClientRect();
+    const depRect = departamentos[0].getBoundingClientRect();
+    const diameter = Math.min(rect.width || 450, rect.height || 450);
+    const halfItem = Math.max(depRect.width || 130, depRect.height || 130) / 2;
+    distance = Math.max(60, Math.round(diameter / 2 - halfItem - 8));
+  }
+
+  // Normalizamos la clave para evitar problemas con mayúsculas, espacios o acentos sueltos
+  const rawKey = (departamentos[index] && departamentos[index].dataset && departamentos[index].dataset.info) ? departamentos[index].dataset.info : '';
+  const key = rawKey.toString().toLowerCase().trim();
+
+  departamentos.forEach(function(dep, i) {
+    const ang = (360 / total) * i;
+    dep.style.transform = "rotate(" + (ang + index * (360 / total)) + "deg) translate(" + distance + "px) rotate(" + (-ang - index * (360 / total)) + "deg)";
+
+    // Normalizar la key de cada elemento también (por si dataset difiere)
+    const depKey = (dep.dataset.info || '').toString().toLowerCase().trim();
+
+    if (i === index) {
+      dep.classList.add("activo");
+      // color principal desde el objeto colores (fallback si no existe)
+      const c = colores[depKey] || colores[rawKey] || '#34791d';
+      dep.style.backgroundColor = c;
+      dep.style.color = "#fff";
+    } else {
+      dep.classList.remove("activo");
+      const c = colores[depKey] || colores[rawKey] || '#34791d';
+      dep.style.backgroundColor = c + "aa";
+      dep.style.color = "#fff";
+    }
+
+    
+  });
+
+  // Obtener la info para el panel (hacer lookup por la clave normalizada para mayor robustez)
+  let info = infoDepartamentos[key];
+  if (!info) info = infoDepartamentos[rawKey] || infoDepartamentos[Object.keys(infoDepartamentos).find(k => k.toLowerCase().trim() === key)];
+
+  if (!info) {
+    // fallback si no hay info: prevenir errores
+    info = { titulo: rawKey || 'Departamento', texto: '', personal: [] };
+    console.warn('actualizarRueda: no se encontró información para la clave:', rawKey, key);
+  }
+
+  // Construir HTML del panel
+  let personalHTML = "";
+  (info.personal || []).forEach(function(p) {
+    personalHTML += "<div class='persona' style='background-color:" + (colores[key] || colores[rawKey] || '#34791d') + "cc;color:#fff;'>";
+    personalHTML += "<span class='cargo'>" + p.titulo + "</span>";
+    personalHTML += "<span class='nombre'>" + p.nombre + "</span>";
+    personalHTML += "</div>";
+  });
+
+  infoPanel.innerHTML = "<h2>" + (info.titulo || rawKey) + "</h2>" +
+                        "<p>" + (info.texto || '') + "</p>" +
+                        "<div class='personal-lista'>" + personalHTML + "</div>";
+
+  // color a aplicar (fallback seguro)
+  const colorActual = colores[key] || colores[rawKey] || '#3A9D23';
+
+  // --- AÑADIR: pintar panel móvil con colorActual (inserta aquí, justo después de const colorActual = ...)
+  if (menuOpciones) {
+    // pintar fondo del panel que se despliega (menú móvil)
+    menuOpciones.style.background = colorActual;
+    menuOpciones.style.borderRadius = '10px';
+    
+
+    // ajustar color de texto de los enlaces para asegurar contraste
+    const submenuAnchors = menuOpciones.querySelectorAll('.submenu a, .alineacion-menu > li > a');
+    submenuAnchors.forEach(a => {
+      // calcular luminancia simple para decidir texto claro u oscuro
+      const hex = (colorActual.replace('#','')).padStart(6,'0');
+      const r = parseInt(hex.substring(0,2),16);
+      const g = parseInt(hex.substring(2,4),16);
+      const b = parseInt(hex.substring(4,6),16);
+      const luminance = 0.299*r + 0.587*g + 0.114*b;
+      a.style.color = (luminance < 140) ? '#fff' : '#fff';
+      // opcional: darles un fondo levemente semitransparente para separar items
+      a.style.background = colorActual + '00'; // transparente por defecto, cambia si quieres
+    });
+  }
+
+  // Aplicar los estilos visuales de forma explícita
+  infoPanel.style.background = colorActual + "aa";
+  infoPanel.style.color = "#fff";
+  ruedaContainer.style.background = colorActual + "33";
+
+  // Forzar cambio en header/menu/footer (inline style debe sobrescribir CSS)
+  if (menu) menu.style.background = colorActual;
+  if (header) header.style.background = colorActual;
+  if (footer) footer.style.background = colorActual;
+  if (tituloDepartamentos) tituloDepartamentos.style.color = colorActual;
+}
+
+      const info = infoDepartamentos[departamentos[index].dataset.info];
+      let personalHTML = "";
+      info.personal.forEach(function(p) {
+        personalHTML += "<div class='persona' style='background-color:" + colores[departamentos[index].dataset.info] + "cc;color:#fff;'>"; 
+        personalHTML += "<span class='cargo'>" + p.titulo + "</span>";
+        personalHTML += "<span class='nombre'>" + p.nombre + "</span>";
+        personalHTML += "</div>";
+      });
+
+      infoPanel.innerHTML = "<h2>" + info.titulo + "</h2>" +
+                            "<p>" + info.texto + "</p>" +
+                            "<div class='personal-lista'>" + personalHTML + "</div>";
+
+      const colorActual = colores[departamentos[index].dataset.info];
+
+      infoPanel.style.background = colorActual + "aa";
+      infoPanel.style.color = "#fff";
+      ruedaContainer.style.background = colorActual + "33";
+      // Aplicar color directamente al nav visible (menu) para que el header
+      // cambie visualmente según el departamento seleccionado.
+      if (menu) {
+        menu.style.background = colorActual;
+      }
+      header.style.background = colorActual;
+      header.style.color = "#fff";
+      footer.style.background = colorActual;
+      footer.style.color = "#fff";
+      if (logoIPMRA) { logoIPMRA.style.color = "#fff"; }
+      if (tituloDepartamentos) { tituloDepartamentos.style.color = colorActual; }
+
+      document.documentElement.style.setProperty('--menu-accent', colorActual);
+      // asegurar que el texto del menú sea legible sobre el color del header
+      document.documentElement.style.setProperty('--menu-text', '#ffffff');
+    
+
+    document.getElementById("next").addEventListener("click", function() {
+      index = (index + 1) % total;
+      actualizarRueda();
+    });
+
+    document.getElementById("prev").addEventListener("click", function() {
+      index = (index - 1 + total) % total;
+      actualizarRueda();
+    });
+
+    departamentos.forEach(function(dep, i) {
+      dep.addEventListener("click", function() {
+        index = i;
+        actualizarRueda();
+      });
+    });
+
+    distribuirRueda();
+    actualizarRueda();
+
+
+    // Submenús desplegables
+document.querySelectorAll(".alineacion-menu li > a").forEach(link => {
+  link.addEventListener("click", function(e) {
+    const parent = this.parentElement;
+    if (parent.querySelector(".submenu")) {
+      e.preventDefault();
+      parent.classList.toggle("show-submenu");
+    }
+  });
+});
+
+    const hamburguesa = document.getElementById("hamburguesa");
+const menuOpciones2 = document.getElementById("menu-opciones");
+
+hamburguesa.addEventListener("click", () => {
+  hamburguesa.classList.toggle("active");
+  menuOpciones2.classList.toggle("show");
+
+  // obtener color del departamento activo (misma lógica que en actualizarRueda)
+  const rawKey = (departamentos[index] && departamentos[index].dataset && departamentos[index].dataset.info) ? departamentos[index].dataset.info : '';
+  const key = rawKey.toString().toLowerCase().trim();
+  const colorActual = colores[key] || colores[rawKey] || '#3A9D23';
+
+  if (menuOpciones2.classList.contains('show')) {
+    // pintar panel móvil con colorActual
+    menuOpciones2.style.background = colorActual;
+    menuOpciones2.style.borderRadius = '10px';
+    menuOpciones2.style.boxShadow = '0 12px 36px rgba(6,36,24,0.12)';
+
+    // ajustar contraste de enlaces mobile (idéntico al bloque de actualizarRueda)
+    const submenuAnchors = menuOpciones2.querySelectorAll('.submenu a, .alineacion-menu > li > a');
+    submenuAnchors.forEach(a => {
+      const hex = (colorActual.replace('#','')).padStart(6,'0');
+      const r = parseInt(hex.substring(0,2),16);
+      const g = parseInt(hex.substring(2,4),16);
+      const b = parseInt(hex.substring(4,6),16);
+      const luminance = 0.299*r + 0.587*g + 0.114*b;
+      a.style.color = (luminance < 140) ? '#fff' : '#fff';
+      a.style.background = colorActual + '00'; // transparente por defecto
+    });
+
+  } else {
+    // al cerrar, opcionalmente quitar estilos inline si prefieres volver a CSS por defecto
+    // descomenta las líneas siguientes si quieres limpiar los estilos al cerrar:
+    // menuOpciones2.style.background = '';
+    // menuOpciones2.style.boxShadow = '';
+    // menuOpciones2.style.borderRadius = '';
+    // menuOpciones2.querySelectorAll('.submenu a, .alineacion-menu > li > a').forEach(a => { a.style.color = ''; a.style.background = ''; });
+  }
+});
+
+    window.addEventListener('scroll', function() {
+      const m = document.querySelector('.menu');
+      if (window.scrollY > 50) m.classList.add('scrolled'); else m.classList.remove('scrolled');
+    });
+
+   
+
+  </script>
+</body>
+</html>

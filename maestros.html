@@ -1,0 +1,1014 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Carnaval de Profes — IPMRA (transición área→área pulida)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --primary-dark:#34791d;
+      --primary:#52bd2e;
+      --primary-darker:#2c6619;
+      --muted:#42514a;
+      --card-radius:14px;
+      --glass: rgba(255,255,255,0.56);
+      --shadow: 0 22px 48px rgba(16,40,12,0.06);
+      --hide-duration: 320ms;
+      --ribbon-duration: 420ms;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:"Poppins",system-ui,Segoe UI,Arial; background:linear-gradient(180deg,#f7fbf6,#eef8ec); color:var(--muted); min-height:100vh;}
+    .wrap{max-width:1200px;margin:36px auto;padding:20px}
+
+    /* ====== MENU SUPERIOR ====== */
+.menu {
+  background: linear-gradient(90deg,#34791d,#52bd2e);
+  padding: 10px 0;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+.scrolled {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  background: linear-gradient(90deg,#2c6619,#4aa626);
+}
+.alineacion-imra-logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  position: relative;
+}
+.alineacion-imra-logo a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: white;
+}
+.alineacion-logo img {
+  border-radius: 50%;
+  border: none;
+}
+
+/* ====== MENU OPCIONES ====== */
+.alineacion-menu {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+.alineacion-menu li { position: relative; }
+.alineacion-menu a {
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.alineacion-menu a:hover {
+  background-color: #ffea4d;
+  color: #fff;
+}
+
+/* ====== SUBMENÚ ====== */
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%; left: 0;
+  background: white;
+  min-width: 220px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 999;
+}
+.submenu a {
+  color: #333;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+}
+.submenu a:hover {
+  background: #ffea4d;
+  color: white;
+}
+.alineacion-menu li.show-submenu .submenu { display: block; }
+.arrow { font-size: 0.7rem; transition: transform 0.3s ease; }
+.show-submenu > a .arrow { transform: rotate(180deg); }
+
+/* ====== BOTON CREDITOS ====== */
+.boton-creditos {
+  background-color: #ffea4d;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+.boton-creditos a {
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  display: inline-block;
+}
+.boton-creditos:hover { background-color: #ffea4d; }
+
+/* ====== HAMBURGUESA ====== */
+.hamburguesa {
+  display: none;
+  flex-direction: column;
+  justify-content: left;
+  cursor: pointer;
+  width: 30px;
+  height: 25px;
+  position: relative;
+  z-index: 1100;
+}
+.hamburguesa span {
+  height: 3px;
+  width: 100%;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.4s ease;
+  position: absolute;
+}
+/* Centrar la imagen solo en la tarjeta "Taller de Hogar" */
+.card[aria-label="Taller de Hogar"] .card-face.card-front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px; /* mantiene algo de espacio alrededor */
+}
+.card[aria-label="Taller de Hogar"] .card-face.card-front img {
+  max-width: 100%;
+  max-height: 220px; /* limita altura para que no desborde la tarjeta */
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Aplicar mismo centrado/tamaño a Metales y Agropecuaria */
+.card[aria-label="Taller de Metales"] .card-face.card-front,
+.card[aria-label="Taller Agropecuaria"] .card-face.card-front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+.card[aria-label="Taller de Metales"] .card-face.card-front img,
+.card[aria-label="Taller Agropecuaria"] .card-face.card-front img {
+  max-width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+.hamburguesa span:nth-child(1) { top: 0; }
+.hamburguesa span:nth-child(2) { top: 10px; }
+.hamburguesa span:nth-child(3) { top: 20px; }
+.hamburguesa.active span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 10px;
+}
+.hamburguesa.active span:nth-child(2) { opacity: 0; }
+.hamburguesa.active span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 10px;
+}
+
+/* ====== FOOTER ====== */
+footer {
+  margin-top: 50px;
+  background: linear-gradient(90deg,#34791d,#52bd2e );
+  color: white;
+  padding: 40px 20px;
+}
+.footer-container {
+  display: flex;
+  justify-content: center;
+  gap: 250px;
+  max-width: 900px;
+  margin: auto;
+  flex-wrap: wrap;
+}
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.footer-logo img { width: 100px; }
+.logo-text {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.vertical-line {
+  width: 2px;
+  height: 100px;
+  background-color: white;
+}
+.vertical-ipmra {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: pre-line;
+  text-align: center;
+}
+.footer-contact ul { list-style: none; padding: 0; }
+.footer-contact h4 { 
+  margin-bottom: 15px;
+  font-size: 1.1rem; 
+  border-bottom: 2px solid white;
+  display: inline-block; 
+  padding-bottom: 5px; 
+}
+.footer-contact li { margin-bottom: 8px; }
+.footer-contact a {
+  text-decoration: none;
+  color:white;
+  font-size: 1.1rem;
+}
+.boton-facebook {
+  background-color: #ffea4d;
+  padding: 3px 8px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+.boton-facebook:hover { background-color: #fce42a; }
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 15px;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 900px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+}
+@media (max-width: 768px) {
+  .alineacion-menu {
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    background: linear-gradient(90deg,#34791d,#52bd2e );
+    width: 100%;
+    border-radius: 8px;
+    animation: slideDown 0.4s ease forwards;
+    position: absolute;
+    top: 100%; /* Aparece debajo del nav */
+    left: 0;
+  }
+  .alineacion-menu.show {
+    display: flex;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hamburguesa { display: flex; }
+  .video-container h1 { font-size: 2.5rem; }
+  .video-container p { font-size: 1rem; padding: 0 15px; }
+  .institucion h2 { font-size: 2rem; }
+  .institucion p { font-size: 1rem; }
+} 
+
+    /* Controls */
+    .controls{display:flex;gap:12px;align-items:center;margin:18px 0;flex-wrap:wrap}
+    .search { display:flex;align-items:left;gap:8px;background:white;padding:8px 12px;border-radius:12px;box-shadow:0 6px 18px rgba(16,40,12,0.05); min-width:220px; border:1px solid rgba(16,40,12,0.03); }
+    .search input{border:0;outline:none;font-size:14px;background:transparent}
+    .filters {display:flex;gap:8px;flex-wrap:wrap}
+    .filter-btn{
+      background:linear-gradient(135deg,#eaf8e7,#dff4dc);
+      border:1px solid rgba(16,40,12,0.04);
+      padding:8px 12px;border-radius:999px;font-weight:700;cursor:pointer;color:var(--primary-darker);
+      font-size:13px; display:inline-flex; gap:8px; align-items:center;
+      transition: background .32s ease, color .22s ease, transform .18s ease, box-shadow .22s ease;
+    }
+    .filter-btn .count { padding:2px 8px; border-radius:999px; background:rgba(16,40,12,0.06); font-weight:800; color:var(--primary-darker); font-size:12px; min-width:28px; text-align:center; transition: background .32s ease, color .22s ease; }
+    .filter-btn.active{ color:white; box-shadow:0 10px 30px rgba(16,40,12,0.08); transform:translateY(-3px); }
+    .filter-btn.active .count { background: rgba(255,255,255,0.14); color:white; }
+
+    /* grid */
+    .grid { display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-top:8px; perspective:1000px; min-height:160px; }
+
+    /* no-results */
+    .no-results {
+      width:100%;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      padding:28px 16px;
+      color:#42514a;
+      font-weight:700;
+      font-size:16px;
+    }
+    .no-results .emoji { font-size:28px; }
+
+    /* card */
+    .card {
+      width:250px; border-radius:var(--card-radius); position:relative; overflow:visible;
+      background: linear-gradient(180deg, rgba(255,255,255,0.68), rgba(255,255,255,0.82));
+      backdrop-filter: blur(8px);
+      border:1px solid rgba(16,40,12,0.04);
+      box-shadow:var(--shadow);
+      transition: transform .28s cubic-bezier(.2,.9,.25,1), box-shadow .28s, opacity var(--hide-duration), filter .24s;
+      display:flex; flex-direction:column; align-items:stretch;
+      height: auto; will-change: transform, opacity;
+    }
+    /* cuando ocultamos, animamos opacidad y translate: la carta sigue en el flujo (no display:none aún),
+       así la transición es fluida y no produce saltos; más abajo el JS esperará transitionend para quitar del flujo. */
+    .card.hide { opacity:0; transform: translateY(12px) scale(.99); pointer-events:none; filter: blur(1px) saturate(.95); }
+    .card[data-hidden="true"] { display:none !important; }
+    .card:focus { outline: 3px solid rgba(52,121,29,0.12); }
+
+    .card .stripe { position:absolute; left:0; top:0; bottom:0; width:8px; border-top-left-radius:var(--card-radius); border-bottom-left-radius:var(--card-radius); }
+
+    .card-head {
+      display:grid;
+      grid-template-columns: 78px 1fr 40px;
+      gap:10px;
+      align-items:start;
+      padding:12px;
+    }
+    .initials-circle {
+      width:64px; height:64px; border-radius:10px; display:grid; place-items:center;
+      border:1px solid rgba(16,40,12,0.03); font-weight:900; font-size:22px; color:white;
+      box-shadow: 0 6px 18px rgba(16,40,12,0.04);
+      justify-self:center;
+    }
+
+    .head-content { display:flex; flex-direction:column; gap:6px; }
+    .teacher-area { font-size:12px; color:rgba(66,81,74,0.95); font-weight:800; line-height:1.14; word-break:break-word; }
+    .teacher-name { font-weight:800; color:var(--primary-darker); font-size:14px; word-break:break-word; }
+
+    .badge {
+      width:36px; height:36px; display:grid; place-items:center; border-radius:10px;
+      color:white; font-weight:800;
+      box-shadow:0 8px 18px rgba(16,40,12,0.06);
+      justify-self:end;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .card-body { padding:10px 12px; display:flex; flex-direction:column; gap:8px; }
+    .ribbons { display:flex; gap:8px; margin-top:2px; flex-wrap:wrap; align-items:center; }
+    .ribbon {
+      font-size:12px; padding:6px 10px; border-radius:999px;
+      background: linear-gradient(90deg, rgba(82,189,46,0.08), rgba(255,255,255,0.02));
+      color:var(--primary-darker); font-weight:800; border:1px solid rgba(16,40,12,0.03);
+      display:inline-block; transform: translateY(0); opacity: 1;
+      transition: transform .22s cubic-bezier(.2,.9,.25,1), box-shadow .22s; will-change: transform;
+    }
+    @keyframes ribbonRise { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .card:hover .ribbon { transform: translateY(-6px); box-shadow: 0 10px 20px rgba(16,40,12,0.08); }
+
+    .card-foot { margin-top:6px; padding:8px 12px; height:auto; display:flex; align-items:center; gap:8px; border-top:0; background:transparent; }
+
+    @media (max-width:900px) {
+      .card { width:48%; }
+      .card-head { grid-template-columns: 64px 1fr 40px; padding:10px; }
+      .initials-circle { width:56px; height:56px; font-size:20px; }
+    }
+    @media (max-width:520px) {
+      .card { width:100%; }
+      .card-head { display:flex; align-items:center; gap:12px; padding:10px; }
+      .initials-circle { width:52px; height:52px; font-size:18px; margin-right:8px; }
+      .badge { width:36px; height:36px; }
+      .teacher-area { font-size:14px; }
+      .teacher-name { font-size:15px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .card, .filter-btn, .ribbon { transition:none; animation:none !important }
+    }
+  
+  /* título MAESTROS: por defecto visible; gradiente solo cuando tenga .has-gradient */
+.maestros {
+  margin-top: 40px;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 1px;
+  /* transición suave para cambios de color/gradiente */
+  transition: background .42s ease, color .36s ease, -webkit-text-fill-color .36s ease;
+}
+
+.maestros h2 {
+  margin: 0;
+  font-size: 2rem;
+  font-family: "Poppins", sans-serif;
+  color: var(--primary-darker);          /* color por defecto cuando NO hay gradiente */
+  background: none;
+  -webkit-background-clip: text;         /* preparado para gradiente cuando se active */
+  background-clip: text;
+  -webkit-text-fill-color: initial;     /* permitir que el color por defecto funcione */
+}
+
+/* Cuando el contenedor tiene la clase .has-gradient, usamos clip+gradiente y hacemos el texto transparente
+   para revelar el gradiente (esto evita que el texto esté invisible cuando NO hay gradiente) */
+.maestros.has-gradient h2 {
+  color: transparent;                    /* transparencia para revelar el background */
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+    <nav class="menu" id="menu">
+      <div class="alineacion-imra-logo">
+        <a href="index.html">
+          <span class="alineacion-logo"><img src="Imagenes/IMRA-logo.png" alt="logo" width="40px"></span>
+          <span class="alineacion-imra">IPMRA</span>
+        </a>
+        <!-- Hamburguesa -->
+        <div class="hamburguesa" id="hamburguesa">
+          <span></span><span></span><span></span>
+        </div>
+        <!-- Menú -->
+        <ul class="alineacion-menu" id="menu-opciones">
+          <li><a href="index.html">Inicio</a></li>
+          <li>
+            <a href="#">Nosotros <span class="arrow">▼</span></a>
+            <ul class="submenu">
+              <li><a href="nuestra-identidad.html">Nuestra Identidad</a></li>
+              <li><a href="departamentos.html">Departamentos</a></li>
+              <li><a href="maestros.html">Maestros</a></li>
+              <li><a href="instalaciones.html">Instalaciones</a></li>
+            </ul>
+          </li>
+          <li><a href="carreras.html">Oferta Academica</a></li>
+          <li><a href="matriculas.html">Matrículas</a></li>
+          <li class="boton-creditos"><a href="creditos.html">Créditos</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <div class="maestros">
+    <h2>MAESTROS DEL IPMRA</h2>
+  </div>
+    <div class="controls">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="search" title="Buscar por nombre o área">
+          🔎 <input id="search" placeholder="Buscar por nombre o área" aria-label="Buscar profesores por nombre o área" />
+        </div>
+      </div>
+
+      <div class="filters" id="filters" aria-label="Filtros por área"></div>
+    </div>
+
+    <section class="grid" id="grid" aria-live="polite"></section>
+
+    <div class="no-results" id="noResults" role="status" aria-hidden="true">
+      <div class="emoji">😕</div>
+      <div>No se encontraron profesores.<br/><span style="font-weight:600;color:#2c6619;font-size:13px">Prueba otro filtro o borra la búsqueda</span></div>
+    </div>
+  </div>
+<!-- ====== FOOTER ====== -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="Imagenes/IMRA-logo.png" alt="logo">
+        <div class="logo-text">
+          <div class="vertical-line"></div>
+          <span class="vertical-ipmra">I<br>P<br>M<br>R<br>A</span>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <h4>Síguenos en nuestra red social</h4>
+        <ul>
+          <li>
+            <a class="boton-facebook" href="https://www.facebook.com/profile.php?id=100064632464818" target="_blank">
+              <img src="Imagenes/facebook.png" alt="facebook" width="16px"> Visita nuestro Facebook
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Instituto Polivalente Modesto Rodas Alvarado - Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <script src="menu-desplegable.js"></script>
+  <script>
+  // Inicialización segura: si el DOM ya está listo, ejecuta init immediately,
+  // si no, espera a DOMContentLoaded. Evita errores si el script se carga
+  // después del evento (que impedirían la ejecución del resto del JS).
+  function initMaestros(){
+  // Datos maestros
+  const TEACHERS = [
+    {id:1, name:'Jorge Alberto Pérez Escobar', area:'Informática'},
+    {id:2, name:'Greisy Michell García Velásquez', area:'Informática'},
+    {id:3, name:'Carina Lizeth Dueñas Lanza', area:'Informática'},
+    {id:4, name:'José Esteban Quintanilla Lemus', area:'Informática'},
+    {id:5, name:'Anthony Eliú Gómez Sabrina', area:'Informática'},
+    {id:6, name:'Rosa Dariela Higaldo Erazo', area:'Informática'},
+    {id:7, name:'Gloria Victoria Mejía Avelar', area:'Informática'},
+
+    {id:8, name:'Eric Javier Zelaya Hernández', area:'Agroforestal'},
+    {id:9, name:'Arístides Joel Lacayo Hernández', area:'Agroforestal'},
+    {id:10, name:'Mario Israel Ortiz Cubas', area:'Agroforestal'},
+
+    {id:11, name:'Lexi Karina Ruiz Romero', area:'Humanidades'},
+    {id:12, name:'Katy Alejandra Láinez Diaz', area:'Humanidades'},
+    {id:13, name:'Karla Michell Sánchez Cáceres', area:'Humanidades'},
+    {id:14, name:'Cándida Rosa Casco Andrade', area:'Humanidades'},
+    {id:15, name:'Andy Lizanky Duarte Martínez', area:'Humanidades'},
+
+    {id:16, name:'Liliana Margarita Bardales Espinal', area:'Hotelería'},
+    {id:17, name:'Greisy Aracely Ramírez Fuentes', area:'Hotelería'},
+
+    {id:18, name:'Rosa Dariela Hidalgo Erazo', area:'Finanzas'},
+    {id:19, name:'Welner Wilfredo Rodríguez Cabrera', area:'Finanzas'},
+
+    {id:20, name:'Moris Saul Zelaya Ramos', area:'Ciencias Naturales'},
+    {id:21, name:'Trixi Ninoska Castillo Izaguirre', area:'Ciencias Naturales'},
+    {id:22, name:'Andy Lizanky Duarte Martínez', area:'Ciencias Naturales'},
+    {id:23, name:'Marla Elizabeth Barralaga', area:'Ciencias Naturales'},
+    {id:24, name:'Francys Johana Zambrano Guevara', area:'Ciencias Naturales'},
+
+    {id:25, name:'Fanny Mireya Castillo', area:'Ciencias Sociales'},
+    {id:26, name:'Lexy Karina Ruiz Romero', area:'Ciencias Sociales'},
+    {id:27, name:'Gloria Yacomina Rivera Hernández', area:'Ciencias Sociales'},
+
+    {id:28, name:'Julio Alberto Salgado Pérez', area:'Matemáticas'},
+    {id:29, name:'Cándida Rosa Casco Andrade', area:'Matemáticas'},
+
+    {id:30, name:'Indira Aramienta Rivera Maradiaga', area:'Español'},
+    {id:31, name:'Karla Michell Sánchez Cáceres', area:'Español'},
+    {id:32, name:'Anabel Barralaga Zelaya', area:'Español'},
+
+    {id:33, name:'Yolibeth Soledad Ochoa Ramírez', area:'Inglés'},
+    {id:34, name:'Gloria Yacomina Rivera Hernández', area:'Inglés'},
+    {id:35, name:'Nasly Melissa Moran Duarte', area:'Inglés'},
+
+    {id:36, name:'Luis Aníbal Salguero Martínez', area:'Artística'},
+    {id:37, name:'Mirza Soto', area:'Artística'},
+
+    {id:38, name:'José Esteban Quintanilla Lemus', area:'Dibujo Técnico'},
+    {id:39, name:'Jesús Alexander Barrientos Pérez', area:'Dibujo Técnico'},
+
+    {id:40, name:'Jimmy Edgardo Láinez Méndez', area:'Educación Física'},
+    {id:41, name:'Trixcy Ninoska Castillo Izaguirre', area:'Educación Física'},
+
+    {id:42, name:'Jesús Alexander Barrientos Pérez', area:'Talleres'},
+    {id:43, name:'Gloria Iliana Espinal Lagos', area:'Talleres'},
+    {id:44, name:'Gloriam Damael Zelaya Ávila', area:'Talleres'},
+    {id:45, name:'Mario Israel Ortiz Cubas', area:'Talleres'},
+
+    {id:46, name:'Flor María Zelaya Ramos', area:'Pedagogía'},
+    {id:47, name:'Nelbi Suyapa Murillo Pérez', area:'Pedagogía'},
+    {id:48, name:'Oscar Isidro Herrera Avelar', area:'Pedagogía'},
+    {id:49, name:'Gloria Victoria Mejía Turcios', area:'Pedagogía'},
+    {id:50, name:'José Luis Barralaga Chirino', area:'Pedagogía'}
+  ];
+
+  // Colores e iconos por área
+  const AREA_META = {
+    'Informática'            : { icon:'🖥️', start:'#4BC0C8', end:'#2C7873' },
+    'Agroforestal'           : { icon:'🌿', start:'#3A9D23', end:'#8ED14E' },
+    'Humanidades'            : { icon:'📚', start:'#FFD166', end:'#E09F3E' },
+    'Hotelería'              : { icon:'🏨', start:'#FF9A3C', end:'#FF6B35' },
+    'Finanzas'               : { icon:'💹', start:'#2E7D32', end:'#005B2E' },
+    'Ciencias Naturales'     : { icon:'🔬', start:'#7ED957', end:'#3AA14F' },
+    'Ciencias Sociales'      : { icon:'🧭', start:'#7B61FF', end:'#4C2CFF' },
+    'Matemáticas'            : { icon:'∑', start:'#2EA8FF', end:'#1759D1' },
+    'Español'                : { icon:'✒️', start:'#E63946', end:'#FF6B6B' },
+    'Inglés'                 : { icon:'📘', start:'#0077B6', end:'#00A8E8' },
+    'Artística'              : { icon:'🎨', start:'#FF6B9A', end:'#FFB86B' },
+    'Dibujo Técnico'         : { icon:'📐', start:'#00C2A8', end:'#007971' },
+    'Educación Física'       : { icon:'🏅', start:'#F9C80E', end:'#FF8C00' },
+    'Talleres'               : { icon:'🧰', start:'#8CC63E', end:'#4A8A1E' },
+    'Pedagogía'              : { icon:'🧑‍🏫', start:'#9C27B0', end:'#6A1B9A' }
+  };
+
+  const grid = document.getElementById('grid');
+  const filtersEl = document.getElementById('filters');
+  const searchInput = document.getElementById('search');
+  const download = document.getElementById('download');
+  const noResults = document.getElementById('noResults');
+
+  const cardsMap = new Map();          // id -> card element
+  const filterButtonsMap = new Map();  // area -> {btn, labelEl, countEl}
+
+  // Normalize text (quita acentos y pasa a minúsculas)
+  function normalizeText(s){
+    return (s||'').toString()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim();
+  }
+
+  // Crear botones (Todos + áreas)
+  const areas = Array.from(new Set(TEACHERS.map(t=>t.area))).sort((a,b)=> a.localeCompare(b,'es'));
+  // primero Todos
+  createFilterButton('Todos', true);
+  // luego cada área
+  areas.forEach(a => createFilterButton(a, false));
+
+  let activeFilter = 'Todos';
+  let query = '';
+
+  function createFilterButton(area, active){
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (active ? ' active' : '');
+    btn.type = 'button';
+    const label = document.createElement('span'); label.className='label'; label.textContent = area;
+    const count = document.createElement('span'); count.className='count'; count.textContent = '0';
+    btn.appendChild(label); btn.appendChild(count);
+
+    btn.addEventListener('click', () => {
+      const next = (area === 'Todos') ? 'Todos' : (activeFilter === area ? 'Todos' : area);
+      if(next === activeFilter) return;
+      activeFilter = next;
+      setActiveButtons(activeFilter);
+      applyFilterCrossfade();
+    });
+
+    filtersEl.appendChild(btn);
+    filterButtonsMap.set(area, {btn, labelEl: label, countEl: count});
+    return {btn, label, count};
+  }
+
+  function setActiveButtons(activeArea){
+    filterButtonsMap.forEach((v, area) => {
+      const btn = v.btn;
+      if(area === activeArea){
+        btn.classList.add('active');
+        if(area !== 'Todos' && AREA_META[area]){
+          const meta = AREA_META[area];
+          btn.style.background = `linear-gradient(90deg, ${meta.start}, ${meta.end})`;
+          btn.style.color = '#fff';
+          v.countEl.style.background = 'rgba(255,255,255,0.14)';
+          v.countEl.style.color = '#fff';
+        } else {
+          btn.style.background = '';
+          btn.style.color = '';
+          v.countEl.style.background = '';
+          v.countEl.style.color = '';
+        }
+      } else {
+        btn.classList.remove('active');
+        btn.style.background = '';
+        btn.style.color = '';
+        v.countEl.style.background = '';
+        v.countEl.style.color = '';
+      }
+    });
+
+    // --- Actualizar color del título MAESTROS según el área activa ---
+    updateHeadingColor(activeArea);
+  }
+
+  // --- FUNCION: actualizar color del título MAESTROS según el área ---
+  function updateHeadingColor(area){
+    const title = document.querySelector('.maestros h2');
+    if(!title) return;
+    // Si es 'Todos' o no existe meta, restauramos fallback (sólido / sin gradiente)
+    if(!area || area === 'Todos' || !AREA_META[area]){
+      title.style.background = 'none';
+      title.style.webkitBackgroundClip = 'text';
+      title.style.backgroundClip = 'text';
+      title.style.color = ''; // permitir CSS por defecto
+      title.style.webkitTextFillColor = ''; // permitir fallback
+      return;
+    }
+    // aplicar gradiente del AREA_META
+    const meta = AREA_META[area];
+    const start = meta.start || '#52bd2e';
+    const end = meta.end || '#2c6619';
+    title.style.background = `linear-gradient(90deg, ${start}, ${end})`;
+    title.style.webkitBackgroundClip = 'text';
+    title.style.backgroundClip = 'text';
+    title.style.color = 'transparent';
+    title.style.webkitTextFillColor = 'transparent';
+  }
+
+  // Crear/garantizar tarjeta
+  function ensureCard(t){
+    if(cardsMap.has(t.id)) return cardsMap.get(t.id);
+
+    const meta = AREA_META[t.area] || {icon:'✱', start:'#ddd', end:'#bbb'};
+    const card = document.createElement('article'); card.className='card'; card.tabIndex=0;
+    card.dataset.id = t.id;
+
+    const stripe = document.createElement('div'); stripe.className='stripe';
+    stripe.style.background = `linear-gradient(180deg, ${meta.start}, ${meta.end})`;
+
+    const head = document.createElement('div'); head.className='card-head';
+    const initials = document.createElement('div'); initials.className='initials-circle';
+    initials.style.background = `linear-gradient(135deg, ${meta.start}, ${meta.end})`;
+    initials.textContent = initialsFrom(t.name);
+
+    const mid = document.createElement('div'); mid.className='head-content';
+    const areaEl = document.createElement('div'); areaEl.className='teacher-area'; areaEl.textContent = t.area;
+    const nameEl = document.createElement('div'); nameEl.className='teacher-name'; nameEl.textContent = t.name;
+    mid.appendChild(areaEl); mid.appendChild(nameEl);
+
+    const badge = document.createElement('div'); badge.className='badge'; badge.title = t.area;
+    badge.style.background = `linear-gradient(135deg, ${meta.start}, ${meta.end})`;
+    badge.style.color = '#fff';
+    const icon = document.createElement('div'); icon.style.fontSize='16px'; icon.textContent = meta.icon; badge.appendChild(icon);
+
+    head.appendChild(initials); head.appendChild(mid); head.appendChild(badge);
+
+    const body = document.createElement('div'); body.className='card-body';
+    const ribbons = document.createElement('div'); ribbons.className='ribbons';
+    const r1 = document.createElement('div'); r1.className='ribbon'; r1.textContent='Profesor';
+    const r2 = document.createElement('div'); r2.className='ribbon'; r2.textContent='IPMRA';
+    ribbons.appendChild(r1); ribbons.appendChild(r2);
+    body.appendChild(ribbons);
+
+    const foot = document.createElement('div'); foot.className='card-foot';
+
+    card.appendChild(stripe); card.appendChild(head); card.appendChild(body); card.appendChild(foot);
+
+    // estados iniciales
+    card.style.display = 'flex';
+    card.dataset.hidden = 'false';
+
+    // focus lift
+    card.addEventListener('focus', ()=> {
+      Array.from(card.querySelectorAll('.ribbon')).forEach(r=> r.style.transform = 'translateY(-6px)');
+    });
+    card.addEventListener('blur', ()=> {
+      Array.from(card.querySelectorAll('.ribbon')).forEach(r=> r.style.transform = '');
+    });
+
+    card.addEventListener('click', ()=> centerCard(card));
+    cardsMap.set(t.id, card);
+    return card;
+  }
+
+  function initialsFrom(name){ return name.split(' ').map(p=>p[0]).slice(0,2).join('').toUpperCase(); }
+
+  function mountAllCards(){
+    TEACHERS.forEach(t=>{
+      const c = ensureCard(t);
+      c.classList.remove('hide');
+      c.dataset.hidden = 'false';
+      if(!grid.contains(c)) grid.appendChild(c);
+    });
+  }
+
+  // Actualiza contadores (respeta búsqueda si se envía q)
+  function updateCounts(q){
+    const qNorm = normalizeText(q || '');
+    const counts = {};
+    TEACHERS.forEach(t => counts[t.area] = 0);
+    TEACHERS.forEach(t => {
+      const nameN = normalizeText(t.name);
+      const areaN = normalizeText(t.area);
+      if(!qNorm || nameN.includes(qNorm) || areaN.includes(qNorm)){
+        counts[t.area] = (counts[t.area] || 0) + 1;
+      }
+    });
+    filterButtonsMap.forEach((v, area) => {
+      if(area === 'Todos') return;
+      v.countEl.textContent = counts[area] || 0;
+    });
+    const todosBtn = filterButtonsMap.get('Todos');
+    if(todosBtn){
+      const visibleTotal = TEACHERS.filter(t => {
+        const matchesFilter = (activeFilter === 'Todos') || (t.area === activeFilter);
+        if(!matchesFilter) return false;
+        if(!qNorm) return true;
+        const nameN = normalizeText(t.name);
+        const areaN = normalizeText(t.area);
+        return nameN.includes(qNorm) || areaN.includes(qNorm);
+      }).length;
+      todosBtn.countEl.textContent = visibleTotal;
+    }
+  }
+
+  // Crossfade ordenado (ocultar -> reordenar -> mostrar)
+  function applyFilterCrossfade(){
+    const qNorm = normalizeText(query);
+
+    const shouldShow = new Set(
+      TEACHERS.filter(t => {
+        const matchesFilter = (activeFilter === 'Todos') || (t.area === activeFilter);
+        if(!matchesFilter) return false;
+        if(!qNorm) return true;
+        const nameN = normalizeText(t.name);
+        const areaN = normalizeText(t.area);
+        return nameN.includes(qNorm) || areaN.includes(qNorm);
+
+      }).map(t => t.id)
+    );
+
+    // Asegurar nodos
+    TEACHERS.forEach(t => {
+      const c = ensureCard(t);
+      if(!grid.contains(c)) grid.appendChild(c);
+    });
+
+    // actualizar contadores ya (evita ver 0 al inicio)
+    updateCounts(query);
+
+    const nowVisible = Array.from(grid.children)
+      .filter(n => n.dataset.hidden !== 'true' && n.style.display !== 'none')
+      .map(n => Number(n.dataset.id));
+    const nowVisibleSet = new Set(nowVisible);
+
+    const toHide = [];
+    const toShow = [];
+
+    cardsMap.forEach((card, id) => {
+      const willShow = shouldShow.has(id);
+      const isVisibleNow = nowVisibleSet.has(id);
+      if(isVisibleNow && !willShow) toHide.push(id);
+      if(!isVisibleNow && willShow) toShow.push(id);
+    });
+
+    // helper: actualizar el color del heading al primer elemento visible
+    // --- FUNCION: actualizar color del título MAESTROS según el área ---
+function updateHeadingColor(area){
+  const container = document.querySelector('.maestros');
+  const title = document.querySelector('.maestros h2');
+  if(!title || !container) return;
+
+  // Si es 'Todos' o no existe meta, restauramos fallback (sólido / sin gradiente)
+  if(!area || area === 'Todos' || !AREA_META[area]){
+    // quitar gradiente
+    container.classList.remove('has-gradient');
+    // limpiar background inline (por si lo dejó la llamada previa)
+    title.style.background = '';
+    return;
+  }
+
+  // aplicar gradiente del AREA_META y activar la clase que habilita el clip
+  const meta = AREA_META[area];
+  const start = meta.start || '#52bd2e';
+  const end = meta.end || '#2c6619';
+  title.style.background = `linear-gradient(90deg, ${start}, ${end})`;
+  container.classList.add('has-gradient');
+}
+
+
+    const hidePromises = toHide.map(id => new Promise(resolve => {
+      const node = cardsMap.get(id);
+      if(!node) return resolve();
+      if(node._hideHandler) { node.removeEventListener('transitionend', node._hideHandler); node._hideHandler = null; }
+      node.style.display = node.style.display || 'flex';
+      node.classList.add('hide');
+
+      const onEnd = (ev) => {
+        if(ev.propertyName && ev.propertyName !== 'opacity') return;
+        if(!shouldShow.has(id)){
+          node.style.display = 'none';
+          node.dataset.hidden = 'true';
+        } else {
+          node.style.display = 'flex';
+          node.dataset.hidden = 'false';
+          node.classList.remove('hide');
+        }
+        node.removeEventListener('transitionend', onEnd);
+        node._hideHandler = null;
+        clearTimeout(node._hideTimeout);
+        resolve();
+      };
+
+      node._hideTimeout = setTimeout(()=> {
+        if(!shouldShow.has(id)){
+          node.style.display = 'none';
+          node.dataset.hidden = 'true';
+          node.classList.add('hide');
+        } else {
+          node.style.display = 'flex';
+          node.dataset.hidden = 'false';
+          node.classList.remove('hide');
+        }
+        if(node._hideHandler) { node.removeEventListener('transitionend', node._hideHandler); node._hideHandler = null; }
+        resolve();
+      }, (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hide-duration')) || 320) + 80);
+
+      node._hideHandler = onEnd;
+      node.addEventListener('transitionend', onEnd);
+    }));
+
+    Promise.all(hidePromises).then(()=> {
+      const ordered = TEACHERS.filter(t => shouldShow.has(t.id)).map(t => t.id);
+      ordered.forEach(id => {
+        const node = cardsMap.get(id);
+        if(node) grid.appendChild(node);
+      });
+
+      toShow.forEach(id => {
+        const node = cardsMap.get(id);
+        if(!node) return;
+        node.style.display = 'flex';
+        void node.offsetWidth;
+        node.classList.remove('hide');
+        node.dataset.hidden = 'false';
+        animateRibbonsOnce(node);
+      });
+
+      updatePlaceholder(shouldShow.size);
+
+      // ---- aquí también actualizamos el color del heading según el primer visible ----
+      updateHeadingToFirstVisible();
+    });
+  }
+
+  function updatePlaceholder(count){
+    if(count === 0){
+      noResults.style.display = 'flex';
+      noResults.setAttribute('aria-hidden','false');
+    } else {
+      noResults.style.display = 'none';
+      noResults.setAttribute('aria-hidden','true');
+    }
+  }
+
+  function animateRibbonsOnce(card){
+    const ribbons = Array.from(card.querySelectorAll('.ribbon'));
+    const baseMs = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ribbon-duration')) || 420;
+    ribbons.forEach((r, idx) => {
+      r.style.animation = `ribbonRise ${baseMs}ms cubic-bezier(.2,.9,.25,1) forwards`;
+      r.style.animationDelay = (idx * 60) + 'ms';
+      const onEnd = () => { r.style.animation = ''; r.removeEventListener('animationend', onEnd); };
+      r.addEventListener('animationend', onEnd);
+    });
+  }
+
+  function centerCard(card){
+    Array.from(grid.children).forEach(n=> n.classList.remove('center'));
+    card.classList.add('center');
+    const rect = card.getBoundingClientRect(), parentRect = grid.getBoundingClientRect();
+    const offset = (rect.left + rect.right)/2 - (parentRect.left + parentRect.right)/2;
+    grid.scrollBy({left: offset, behavior:'smooth'});
+  }
+
+  // Handlers
+  searchInput.addEventListener('input', (e) => {
+    query = e.target.value.trim();
+    applyFilterCrossfade();
+  });
+
+  if (download) {
+    download.addEventListener('click', () => {
+      const data = JSON.stringify(TEACHERS, null, 2);
+      const blob = new Blob([data], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'teachers_carnaval.json'; a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  // INIT sequence: montar, mostrar y asegurar contadores desde el inicio
+  mountAllCards();
+  setActiveButtons(activeFilter);
+  // >>>> aquí forzamos actualización inicial de contadores para que no se vean 0 <<<<
+  updateCounts('');
+  // y aplicamos el filtro (crossfade maneja el caso inicial sin hide)
+  applyFilterCrossfade();
+
+  // Navegación con flechas
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+      const visible = Array.from(grid.children).filter(n=> n.dataset.hidden !== 'true' && n.style.display !== 'none');
+      const focused = document.activeElement;
+      const idx = visible.indexOf(focused);
+      if(idx !== -1){
+        const next = (e.key==='ArrowRight') ? visible[idx+1] || visible[0] : visible[idx-1] || visible[visible.length-1];
+        next && next.focus();
+      } else {
+        visible[0] && visible[0].focus();
+      }
+    }
+  });
+
+  // Asegurar que el título refleje el filtro inicial (hago la llamada explícita después de setActiveButtons)
+  updateHeadingColor(activeFilter);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMaestros);
+  } else {
+    initMaestros();
+  }
+</script>
+
+
+
+</body>
+</html>

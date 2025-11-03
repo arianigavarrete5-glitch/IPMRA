@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituto Modesto Rodas Alvarado</title>
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
+   <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ====== HEADER ====== -->
+  <header>
+    <nav class="menu" id="menu">
+      <div class="alineacion-imra-logo">
+        <a href="index.html">
+          <span class="alineacion-logo"><img src="Imagenes/IMRA-logo.png" alt="logo" width="40px"></span>
+          <span class="alineacion-imra">IPMRA</span>
+        </a>
+        <div class="hamburguesa" id="hamburguesa"><span></span><span></span><span></span></div>
+        <ul class="alineacion-menu" id="menu-opciones">
+          <li><a href="index.html">Inicio</a></li>
+          <li>
+            <a href="#">Nosotros <span class="arrow">▼</span></a>
+            <ul class="submenu">
+              <li><a href="nuestra-identidad.html">Nuestra Identidad</a></li>
+              <li><a href="departamentos.html">Departamentos</a></li>
+              <li><a href="maestros.html">Maestros</a></li>
+              <li><a href="instalaciones.html">Instalaciones</a></li>
+            </ul>
+          </li>
+          <li><a href="carreras.html">Oferta Academica</a></li>
+          <li><a href="matriculas.html">Matrículas</a></li>
+          <li class="boton-creditos"><a href="creditos.html">Créditos</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ====== TIMELINE ====== -->
+  <div style="text-align:center;"><button class="titulo">Nuestra Historia</button></div>
+  <div class="timeline">
+    <div class="year active" data-year="1985">1985</div>
+    <div class="year" data-year="1986">1986</div>
+    <div class="year" data-year="1987">1987</div>
+    <div class="year" data-year="1997">1997</div>
+    <div class="year" data-year="2004">2004</div>
+    <div class="year" data-year="2005">2005</div>
+    <div class="year" data-year="Ahora">Ahora</div>
+  </div>
+
+  <div class="main-content">
+    <div class="big-year" id="bigYear">1985</div>
+    <div class="history-card animate">
+      <h2 id="historyTitle">Fundación del Instituto</h2>
+      <p id="historyText">En el año de 1985, por un grupo de personas con una visión futurista y vecinas de esta aldea fue fundado el INSTITUTO "MODESTO RODAS ALVARADO" El cual da inicio el 15 de Marzo de 1985, con la modalidad de CICLO COMÚN, con una matrícula de: 60 alumnos I curso grupos "A" y "B" y 6 Docentes, de los cuales 2 de ellos eran MARCO AURELIO GUARDADO ALAS "DIRECTOR" Y HECTOR ROBERTO MEJIA SANTOS "SUBDIRECTOR" funcionaba en el local de la Escuela "FRANCISCO MORAZÁN" de esta aldea en carácter PRIVADO en jornada Nocturna, mediante Acuerdo No 2314E.P.85.</p>
+    </div>
+  </div>
+
+  <!-- ====== MISIÓN Y VISIÓN ====== -->
+  <div class="mv-section">
+    <div style="text-align:center;">
+      <button class="titulo">Misión</button>
+      <p class="mv-card">Formar talentos con principios y valores, basados en la realidad socioeconómica, cultural y ambiental con competencias para promover su propio desarrollo que sea capaz de defender su identidad nacional y de enfrentarse hacia un mundo globalizado.</p>
+    </div>
+    <div style="text-align:center;">
+      <button class="titulo">Visión</button>
+      <p class="mv-card">Pretendemos ser una Institución Educativa generadora de procesos de aprendizaje, integradores de calidad a través de una educación eficaz, eficiente y confiable que supere las expectativas de nuestros educandos, que contribuya al mejoramiento de vida de la población y al fortalecimiento de valores para el bienestar de la nación.</p>
+    </div>
+  </div>
+
+  <!-- ====== FOOTER ====== -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="Imagenes/IMRA-logo.png" alt="logo">
+        <div class="logo-text">
+          <div class="vertical-line"></div>
+          <span class="vertical-ipmra">I<br>P<br>M<br>R<br>A</span>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <h4>Síguenos en nuestra red social</h4>
+        <ul>
+          <li>
+            <a class="boton-facebook" href="https://www.facebook.com/profile.php?id=100064632464818" target="_blank">
+              <img src="Imagenes/facebook.png" alt="facebook" width="16px"> Visita nuestro Facebook
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Instituto Polivalente Modesto Rodas Alvarado - Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <!-- ====== SCRIPT ====== -->
+  <script>
+    const historyData = {
+      "1985": { historyTitle: "Fundación del Instituto", historyText: "En el año de 1985, por un grupo de personas con una visión futurista y vecinas de esta aldea fue fundado el INSTITUTO MODESTO RODAS ALVARADO El cual da inicio el 15 de Marzo de 1985, con la modalidad de CICLO COMÚN, con una matrícula de: 60 alumnos I curso grupos A y B y 6 Docentes, de los cuales 2 de ellos eran MARCO AURELIO GUARDADO ALAS DIRECTOR Y HECTOR ROBERTO MEJIA SANTOS SUBDIRECTOR funcionaba en el local de la Escuela FRANCISCO MORAZÁN de esta aldea en carácter PRIVADO en jornada Nocturna, mediante Acuerdo No 2314E.P.85." },
+      "1986": { historyTitle: "Oficialización", historyText: "En el año 1986, el señor Ministro de Educación, mediante las gestiones de la diputada profesora María Teresa Cardona Lazo, acuerda oficializar el funcionamiento del Instituto Modesto Rodas Alvarado a través del Decreto No. 132-85, en la jornada nocturna. Para ese momento, la institución ya presentaba un crecimiento estudiantil de 47 alumnos más y contaba con la contratación de nuevo personal docente y administrativo. La dirección estuvo a cargo de Marco Aurelio Guardado Alas como Director, acompañado por Héctor Roberto Mejía Santos en la Subdirección, Epifanio Banegas Gámez como Secretario y Antonio Laínez como Tesorero. El cuerpo docente estaba conformado por Geraldina Padilla Oliva, Angélica Fonseca Olluela, Mara Ondina López Fonseca, Juana Edith Barralaga Chirinos, Mariana Estelia Barralaga Chirinos y Marta Leonela Martínez Martínez." },
+      "1987": { historyTitle: "Nuevas Instalaciones", historyText: "Adjuntamos a ello el esfuerzo de Docentes, Estudiantes y la comunidad entera, para dar inicio a la construcción de dos módulos para aulas clase incluyendo Oficinas Administrativas y una vez terminados el 1 DE JULIO DE 1987, cambia totalmente la estructura del Centro Educativo, dando paso al nombramiento del nuevo personal que laboraría ya en jornada diurna y vespertina. Siendo el DIRECTOR Y CATEDRATICO DE ESTUDIOS SOCIALES, Prof. HECTOR ROBERTO MEJIA SANTOS, SUBDIRECTORA Y CATEDRATICA DE MATEMATICAS, Profa. MARA ONDINA LOPEZ FONSECA, SECRETARIA Y CATEDRATICA DE CIENCIAS NATURALES, Profa. VILMA MOREIRA Y Administradora: PMC. MARLA ELIZABETH BARRALAGA." },
+      "1997": { historyTitle: "Instituto Polivalente", historyText: "En el año 1997, cuando ya habían pasado diez años, el Instituto contaba con un crecimiento estudiantil de 119 alumnos, 9 docentes y nuevas autoridades que administraban y dirigían el Centro Educativo. La directora era la profesora Mara Ondina López Fonseca, el subdirector el licenciado Fredy Orlando Turcios Castillo, el secretario el licenciado Adanis Alanis Murillo Pérez, la consejera de estudiantes Geraldina Padilla Oliva y el administrador Jorge Odalys Duarte Lanza. Ese mismo año, el Instituto Oficial Modesto Rodas Alvarado fue convertido en polivalente, iniciando con la modalidad de Bachillerato en Administración de Empresas Agropecuarias, con una matrícula de 21 alumnos en jornada vespertina, modalidad que más adelante entró en desgaste." },
+      "2004": { historyTitle: "Contaduría y Finanzas", historyText: "En el año 2004, mediante gestiones realizadas por la Directora y otros directivos de este Centro, fue autorizada una nueva modalidad: Educación Comercial, que inició con un grupo estudiantil de 47 alumnos en la jornada vespertina. De acuerdo a los avances y disposiciones de la Secretaría de Educación, Educación Comercial fue cancelada y transformada en el Bachillerato Técnico Profesional en Contaduría y Finanzas." },
+      "2005": { historyTitle: "Informática y SEMED", historyText: "En el año 2005 surge la modalidad de Técnico en Computación y Ciencias y Letras, con una matrícula inicial de 35 alumnos en la jornada matutina. Posteriormente, en el 2009, y en cumplimiento de avances y disposiciones de la Secretaría de Educación, esta modalidad fue transformada en el Bachillerato Técnico Profesional en Informática, que para el año 2016 alcanzó una matrícula de 165 alumnos. Ese mismo año 2005 también inició el Programa de Educación a Distancia (SEMED), gracias a las gestiones realizadas por la directora del centro educativo, con un grupo inicial de 21 alumnos de Ciclo Común a Distancia. Más adelante, en el año 2008, dentro de este mismo programa, se incorporó una nueva modalidad: el Bachillerato en Administración de Empresas, con una matrícula de 19 alumnos, funcionando en modalidad de fin de semana (sábado y domingo)." },
+      "Ahora": { historyTitle: "Institución Consolidada", historyText: "En la actualidad, el Instituto Oficial Polivalente Modesto Rodas Alvarado ha alcanzado un alto nivel de desarrollo gracias a la eficiente administración y dirección de la profesora Mara Ondina López Fonseca. El centro educativo cuenta con III Ciclo de Educación Básica, cuatro modalidades diferentes en jornada doble, además del Programa de SEMED, que incluye Ciclo Común y el Bachillerato en Administración de Empresas. En total, dispone de una matrícula de 723 alumnos y 42 docentes, así como de un equipo administrativo conformado por una directora, dos subdirectores, un administrador, dos consejeros de estudiantes, una orientadora, tres jefes o coordinadores de talleres, un asistente de laboratorio y coordinadores para las diferentes áreas y modalidades. Cabe destacar que este centro educativo inició en 1985 en forma de “miniatura” en la aldea de Ilanga, Trujillo, Colón, y hoy constituye una institución consolidada al servicio de la educación." }
+    };
+
+    const years = document.querySelectorAll(".year");
+    const bigYear = document.getElementById("bigYear");
+    const historyTitle = document.getElementById("historyTitle");
+    const historyText = document.getElementById("historyText");
+
+    years.forEach(year => {
+      year.addEventListener("click", () => {
+        years.forEach(y => y.classList.remove("active"));
+        year.classList.add("active");
+        const yearValue = year.dataset.year;
+        const data = historyData[yearValue];
+
+        bigYear.classList.remove("animate");
+        historyText.parentElement.classList.remove("animate");
+        void bigYear.offsetWidth; void historyText.parentElement.offsetWidth;
+
+        bigYear.textContent = yearValue;
+        historyTitle.textContent = data.historyTitle;
+        historyText.textContent = data.historyText;
+
+        bigYear.classList.add("animate");
+        historyText.parentElement.classList.add("animate");
+      });
+    });
+
+    // ====== NAV SCROLL EFFECT ======
+    const menu = document.getElementById("menu");
+    window.addEventListener("scroll", () => {
+      menu.classList.toggle("scrolled", window.scrollY > 50);
+    });
+
+    // ====== HAMBURGUESA MENU ======
+    const hamburguesa = document.getElementById("hamburguesa");
+    const menuOpciones = document.getElementById("menu-opciones");
+    hamburguesa.addEventListener("click", () => {
+      hamburguesa.classList.toggle("active");
+      menuOpciones.classList.toggle("show");
+    });
+
+    // ====== SUBMENU ======
+    const submenuParents = document.querySelectorAll(".alineacion-menu > li");
+    submenuParents.forEach(parent => {
+  parent.addEventListener("click", (e) => {
+    const link = e.target.closest("a");
+    if (link && link.nextElementSibling && link.nextElementSibling.classList.contains("submenu")) {
+      e.preventDefault(); // solo evita el click en el padre con submenu
+      parent.classList.toggle("show-submenu");
+    }
+  });
+});
+
+(function(){
+  // Sólo ejecutar en pantallas que son tablet o móvil
+  function isCollapsible() {
+    return window.matchMedia('(max-width: 1024px)').matches;
+  }
+
+  const timeline = document.querySelector('.timeline');
+  if(!timeline) return;
+
+  // Centrar un elemento dentro del contenedor horizontal
+  function centerElement(el) {
+    if (!el || !timeline) return;
+    const containerRect = timeline.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const offset = (elRect.left + elRect.width/2) - (containerRect.left + containerRect.width/2);
+    // animado
+    timeline.scrollBy({ left: offset, behavior: 'smooth' });
+  }
+
+  // Manejar clicks: centrar año activo
+  timeline.addEventListener('click', (e) => {
+    const year = e.target.closest('.year');
+    if (!year) return;
+    // activar visualmente (reutilizar la lógica ya existente en tu script)
+    document.querySelectorAll('.year').forEach(y => y.classList.remove('active'));
+    year.classList.add('active');
+
+    // disparar evento personalizado para que tu script actual actualice contenido
+    const yearValue = year.dataset.year;
+    const ev = new CustomEvent('yearChangeFromTimeline', { detail: { year: yearValue } });
+    window.dispatchEvent(ev);
+
+    if (isCollapsible()) centerElement(year);
+  });
+
+  // Al cargar la página, centrar el elemento activo si es mobile/tablet
+  function centerActiveOnLoad(){
+    const active = timeline.querySelector('.year.active');
+    if(active && isCollapsible()) {
+      // pequeña espera para que render termine (imagenes, fuentes)
+      setTimeout(()=> centerElement(active), 220);
+    }
+  }
+
+  window.addEventListener('load', centerActiveOnLoad);
+  window.addEventListener('resize', () => {
+    // recenter on change to/from mobile
+    setTimeout(centerActiveOnLoad, 150);
+  });
+
+  // Escuchar evento que ya usa tu código para actualizar texto (si quieres, lo integras)
+  window.addEventListener('yearChangeFromTimeline', (e) => {
+    const y = e.detail.year;
+    // Si tu script tiene la función para cambiar contenido, emítela aquí.
+    // En tu código ya vinculas click a cada .year para actualizar bigYear y textos;
+    // este evento sirve a terceros si quieres reaccionar externamente.
+  });
+
+  // Hacer touch swipes suaves: (scroll natural + momentum ya en mobile)
+  // Opcional: añadir arrastre con mouse para desktop small screens
+  let isDown = false, startX, scrollLeft;
+  timeline.addEventListener('pointerdown', (e) => {
+    if(!isCollapsible()) return;
+    isDown = true;
+    timeline.classList.add('dragging');
+    startX = e.pageX - timeline.offsetLeft;
+    scrollLeft = timeline.scrollLeft;
+    timeline.setPointerCapture(e.pointerId);
+  });
+  timeline.addEventListener('pointermove', (e) => {
+    if(!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - timeline.offsetLeft;
+    const walk = (x - startX) * 1; // scroll-fastness
+    timeline.scrollLeft = scrollLeft - walk;
+  });
+  timeline.addEventListener('pointerup', (e) => {
+    isDown = false;
+    timeline.classList.remove('dragging');
+    try { timeline.releasePointerCapture(e.pointerId); } catch(e){}
+  });
+  timeline.addEventListener('pointerleave', () => { isDown = false; timeline.classList.remove('dragging'); });
+
+})();
+  </script>
+</body>
+</html>

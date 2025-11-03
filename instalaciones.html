@@ -1,0 +1,1876 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Enlace al CSS global del sitio -->
+  <link rel="stylesheet" href="style.css">
+  <style>
+:root{
+  --max-width:1200px;
+  --gap:14px;
+  --anim-dur:350ms;
+
+  /* Paleta principal (verdes) */
+  --brand-gradient-start: #e4f30a; /* verde principal */
+  --brand-gradient-end:   #ccee0b; /* verde secundario */
+  --green-dark:           #dbf306; /* hover / scrolled */
+  --green-mid:            #c9f503;
+
+  /* Acentos / highlights */
+  --lime-300:    #81f25c;
+  --accent-hover: #65BD47;
+
+  /* Neutros / fondos / texto */
+  --white:     #ffffff;
+  --bg:        #f6f8fb;   /* fondo general */
+  --bg-soft:   #f9f9f9;   /* secciones */
+  --card:      #ffffff;
+  --card-alt:  #f4f4f4;
+  --muted:     #5b6670;   /* texto secundario (ya lo tenías) */
+  --text-1:    #333333;
+  --text-2:    #444444;
+
+  /* Sombras / overlays */
+  --overlay-strong: rgba(0,0,0,0.25);
+  --shadow-1: rgba(0,0,0,0.15);
+  --shadow-2: rgba(0,0,0,0.20);
+  --shadow-accent: rgba(44,102,25,0.63); /* #2c6619a1 */
+
+  /* Compatibilidad con tu CSS previo */
+  --accent: var(--brand-gradient-start);
+  --badge-bg: rgba(255,255,255,0.95);
+  --badge-shadow: 0 6px 18px rgba(2,6,23,0.06);
+}
+
+/* Reset / base */
+*{box-sizing:border-box}
+html,body{
+  height:100%;
+  margin:0;
+  font-family:'Montserrat',system-ui,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text-1);
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Header / brand */
+header{
+  max-width:var(--max-width);
+  margin:18px auto 0;
+  padding:12px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  width:56px;
+  height:56px;
+  border-radius:10px;
+  background:linear-gradient(135deg,var(--brand-gradient-start),var(--brand-gradient-end));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--white);
+  font-weight:700;
+  font-family:'Montserrat',sans-serif;
+}
+
+.brand h1{
+  margin:0;
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:0.5px;
+  color:var(--text-1);
+}
+
+.brand small{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:400;
+}
+
+
+/* Contenido principal */
+main{
+  max-width:var(--max-width);
+  margin:28px auto;
+  padding:0 20px 80px;
+}
+
+/* Controls / chips */
+.controls{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom:16px;
+}
+
+.controls label{
+  color:var(--muted);
+  font-weight:600;
+}
+
+.controls select,
+.controls button,
+.controls input{
+  padding:8px 12px;
+  border-radius:10px;
+  border:0.1px solid rgba(15, 23, 36, 0.007);
+  background:var(--card);
+  cursor:pointer;
+  font-weight:600;
+  font-family:'Poppins',sans-serif;
+  color:var(--text-1);
+}
+
+.controls .search-row{ width:100%; }
+.controls input{ width:100%; max-width:720px; }
+.controls-row{ display:flex; gap:12px; align-items:center; width:100%; }
+.controls-row .chips{ max-width: 100%; }
+.controls-row .counter{ margin-left:auto; }
+
+/* estilo de búsqueda (como en maestros) */
+.search { display:flex;align-items:center;gap:8px;background:white;padding:8px 12px;border-radius:12px;box-shadow:0 6px 18px rgba(16,40,12,0.05); min-width:220px; border:1px solid rgba(16,40,12,0.03); }
+.search input{border:0;outline:none;font-size:14px;background:transparent;width:100%;}
+
+.chips{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  max-width:70%;
+}
+/* Estilo idéntico a los filtros de `maestros.html` (.filter-btn) */
+.chip{
+  background:linear-gradient(135deg,#eaf8e7,#dff4dc);
+      border:1px solid rgba(16,40,12,0.04);
+      padding:8px 12px;border-radius:999px;font-weight:700;cursor:pointer;color:var(--primary-darker);
+      font-size:13px; display:inline-flex; gap:8px; align-items:center;
+      transition: background .32s ease, color .22s ease, transform .18s ease, box-shadow .22s ease;
+}
+
+/* contador pequeño dentro del chip (como en maestros) */
+.chip .count{ padding:2px 8px; border-radius:999px; background:rgba(16,40,12,0.06); font-weight:800; color:var(--primary-darker); font-size:12px; min-width:28px; text-align:center; transition: background .32s ease, color .22s ease; }
+
+.chip:focus{ outline:3px solid rgba(11,95,255,0.12); }
+
+.chip.active{
+  color:white;
+  box-shadow:0 10px 30px rgba(16,40,12,0.08);
+  transform: translateY(-3px);
+}
+
+.chip.active .count{ background: rgba(255,255,255,0.14); color:white; }
+
+/* Colores por área para el estado activo de las chips (coinciden con los badges y captions) */
+.chip.active[data-area="oficinas"]{ background: linear-gradient(135deg,#0b5fff,#0066ff); }
+.chip.active[data-area="descanso"]{ background: linear-gradient(135deg,#FFD39F,#FF8A65); }
+.chip.active[data-area="informatica"]{ background: linear-gradient(135deg,#00C2A8,#007971); }
+.chip.active[data-area="finanzas"]{ background: linear-gradient(135deg,#F9C80E,#FF8C00); }
+.chip.active[data-area="modulos"]{ background: linear-gradient(135deg,#8CC63E,#4A8A1E); }
+.chip.active[data-area="agroforestal"]{ background: linear-gradient(135deg,#2F9E44,#1E7A3A); }
+.chip.active[data-area="deportiva"]{ background: linear-gradient(135deg,#9C27B0,#6A1B9A); }
+.chip.active[data-area="biblioteca"]{ background: linear-gradient(135deg,#0077B6,#00A8E8); }
+.chip.active[data-area="reunion"]{ background: linear-gradient(135deg,#E63946,#FF6B6B); }
+.chip.active[data-area="talleres"]{ background: linear-gradient(135deg,#8B4513,#D2691E); }
+.chip.active[data-area="all"]{ /* 'Todas' se mantiene neutra pero con efecto activo */ background: linear-gradient(135deg,#eaf8e7,#dff4dc); }
+
+.counter{
+  margin-left:auto;
+  color:var(--muted);
+  font-weight:500;
+  font-size:14px;
+}
+
+/* No results (mensaje mostrado cuando no hay coincidencias) */
+.no-results {
+  width:100%;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:28px 16px;
+  color:var(--text-2);
+  font-weight:700;
+  font-size:16px;
+}
+.no-results .emoji { font-size:28px; }
+
+/* Grid de tarjetas */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  transition: all 300ms ease;
+}
+
+@media (max-width:1100px){ .grid{grid-template-columns: repeat(3,1fr);} }
+@media (max-width:780px){ .grid{grid-template-columns: repeat(2,1fr);} }
+@media (max-width:480px){ .grid{grid-template-columns: 1fr;} }
+
+/* Tarjeta */
+.card{
+  background:var(--card);
+  border-radius:10px;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+  box-shadow:0 10px 30px var(--shadow-1);
+  /* transición unificada y más 'suave' para animaciones FLIP y aparición */
+  transition: transform var(--anim-dur) cubic-bezier(.2,.9,.26,1), box-shadow var(--anim-dur) ease, opacity var(--anim-dur) ease;
+  will-change: transform, opacity;
+}
+
+.card::before{ content:""; display:block; padding-top:66.666%; }
+
+.card > img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition: transform .6s cubic-bezier(.2,.9,.26,1), filter .3s;
+}
+
+.caption{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  /* apariencia tipo vidrio sin blur: fondo semi-transparente neutro por defecto
+     (se sobreescribe con color por área más abajo) */
+  background: rgba(255,255,255,1);
+  color:var(--white);
+  padding:8px 10px;
+  border-radius:8px;
+  font-weight:600;
+  font-size:14px;
+  border: 1px solid rgba(255,255,255,1);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.card:hover{
+  transform: translateY(-6px);
+  box-shadow:0 20px 60px var(--shadow-2);
+}
+
+.card:hover img{ transform: scale(1.06); filter:brightness(1.02); }
+.card.hidden{
+  /* cuando una tarjeta está oculta, la desplazamos ligeramente hacia abajo
+     y la hacemos transparente; al quitar .hidden la tarjeta sube (bottom->top) */
+  opacity:0;
+  transform: translateY(18px) scale(.995);
+  pointer-events:none;
+}
+
+/* Category badge */
+.cat-badge{
+  position:absolute;
+  left:10px;
+  top:10px;
+  width:44px;
+  height:44px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--badge-bg);
+  box-shadow:var(--badge-shadow);
+  z-index:4;
+  transition:transform .22s ease, box-shadow .22s ease, background .22s;
+  border: 1px solid rgba(15,23,36,0.06);
+}
+
+.cat-badge svg{ width:20px; height:20px; display:block; }
+.cat-badge .label{
+  position:absolute;
+  left:56px;
+  top:50%;
+  transform:translateY(-50%) translateX(-6px);
+  background:rgba(2,6,23,0.85);
+  color:var(--white);
+  padding:6px 8px;
+  border-radius:8px;
+  font-size:13px;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s, transform .18s;
+  font-weight:500;
+}
+.cat-badge:hover .label{ opacity:1; transform:translateY(-50%) translateX(6px); pointer-events:auto; }
+
+/* Colores por área: usan el atributo data-area de la tarjeta para pintar el badge/icon */
+.card[data-area="oficinas"] .cat-badge{ background: linear-gradient(135deg,#0b5fff,#0066ff); }
+.card[data-area="descanso"] .cat-badge{ background: linear-gradient(135deg,#FFD39F,#FF8A65); }
+.card[data-area="informatica"] .cat-badge{ background: linear-gradient(135deg,#00C2A8,#007971); }
+.card[data-area="finanzas"] .cat-badge{ background: linear-gradient(135deg,#F9C80E,#FF8C00); }
+.card[data-area="modulos"] .cat-badge{ background: linear-gradient(135deg,#8CC63E,#4A8A1E); }
+.card[data-area="agroforestal"] .cat-badge{ background: linear-gradient(135deg,#2F9E44,#1E7A3A); }
+.card[data-area="deportiva"] .cat-badge{ background: linear-gradient(135deg,#9C27B0,#6A1B9A); }
+.card[data-area="biblioteca"] .cat-badge{ background: linear-gradient(135deg,#0077B6,#00A8E8); }
+.card[data-area="reunion"] .cat-badge{ background: linear-gradient(135deg,#E63946,#FF6B6B); }
+.card[data-area="talleres"] .cat-badge{ background: linear-gradient(135deg,#8B4513,#D2691E); }
+
+/* Forzar color de trazo del SVG dentro del badge a blanco para contraste */
+.card .cat-badge svg{ stroke:#fff !important; }
+
+/* Reemplazar SVG por iconos simples por área usando pseudo-elemento ::before.
+   Ocultamos el SVG embebido y mostramos un emoji/icono según data-area. */
+.card .cat-badge svg{ display:none !important; }
+.card .cat-badge::before{
+  content: "";
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:0.6px;
+  line-height:1;
+  color:#fff;
+  text-transform:uppercase;
+}
+
+/* Letras identificadoras por área (sin emojis ni SVGs) */
+.card[data-area="oficinas"] .cat-badge::before{ content: "OF"; }
+.card[data-area="descanso"] .cat-badge::before{ content: "DS"; }
+.card[data-area="informatica"] .cat-badge::before{ content: "IT"; }
+.card[data-area="finanzas"] .cat-badge::before{ content: "FN"; }
+.card[data-area="modulos"] .cat-badge::before{ content: "MD"; }
+.card[data-area="agroforestal"] .cat-badge::before{ content: "AG"; }
+.card[data-area="deportiva"] .cat-badge::before{ content: "DP"; }
+.card[data-area="biblioteca"] .cat-badge::before{ content: "BI"; }
+.card[data-area="reunion"] .cat-badge::before{ content: "RE"; }
+.card[data-area="talleres"] .cat-badge::before{ content: "TL"; }
+
+/* Tinte sutil en la caption (efecto cristal coloreado por área) */
+.card[data-area="oficinas"] .caption{ background: linear-gradient(180deg, rgba(11,95,255,0.18), rgba(11,95,255,0.30)); border-color: rgba(11,95,255,0.18); }
+.card[data-area="descanso"] .caption{ background: linear-gradient(180deg, rgba(255,211,159,0.18), rgba(255,138,101,0.30)); border-color: rgba(255,138,101,0.18); }
+.card[data-area="informatica"] .caption{ background: linear-gradient(180deg, rgba(0,194,168,0.18), rgba(0,121,113,0.30)); border-color: rgba(0,121,113,0.18); }
+.card[data-area="finanzas"] .caption{ background: linear-gradient(180deg, rgba(249,200,14,0.18), rgba(255,140,0,0.30)); border-color: rgba(255,140,0,0.18); }
+.card[data-area="modulos"] .caption{ background: linear-gradient(180deg, rgba(140,198,62,0.18), rgba(74,138,30,0.30)); border-color: rgba(74,138,30,0.18); }
+.card[data-area="agroforestal"] .caption{ background: linear-gradient(180deg, rgba(47,158,68,0.18), rgba(30,122,58,0.30)); border-color: rgba(30,122,58,0.18); }
+.card[data-area="deportiva"] .caption{ background: linear-gradient(180deg, rgba(156,39,176,0.18), rgba(106,27,154,0.30)); border-color: rgba(106,27,154,0.18); }
+.card[data-area="biblioteca"] .caption{ background: linear-gradient(180deg, rgba(0,119,182,0.18), rgba(0,168,232,0.30)); border-color: rgba(0,168,232,0.18); }
+.card[data-area="reunion"] .caption{ background: linear-gradient(180deg, rgba(230,57,70,0.18), rgba(255,107,107,0.30)); border-color: rgba(255,107,107,0.18); }
+.card[data-area="talleres"] .caption{ background: linear-gradient(180deg, rgba(139,69,19,0.18), rgba(210,105,30,0.30)); border-color: rgba(210,105,30,0.18); }
+
+
+
+/* Side panel */
+.side{
+  position:fixed;
+  right:-460px;
+  top:0;
+  width:420px;
+  height:100%;
+  background:var(--white);
+  box-shadow:-24px 0 60px var(--shadow-1);
+  z-index:1400;
+  transition:right .36s cubic-bezier(.2,.9,.3,1);
+  padding:18px;
+  overflow:auto;
+  border-left:1px solid rgba(15,23,36,0.04);
+  font-weight:400;
+}
+
+.side.open{ right:0 }
+.side .close{
+  position:absolute;
+  left:14px;
+  top:10px;
+  border:none;
+  background:transparent;
+  font-size:22px;
+  cursor:pointer;
+}
+
+.side img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:10px;
+  box-shadow:0 12px 40px var(--shadow-1);
+}
+
+.side h3{
+  margin:12px 0 6px;
+  font-weight:700;
+  font-size:20px;
+  color:var(--text-1);
+}
+
+/* Forzar color del título del side según el área mediante clases dinámicas */
+.side.area-oficinas h3{ color:#0066ff !important; }
+.side.area-descanso h3{ color:#FF8A65 !important; }
+.side.area-informatica h3{ color:#007971 !important; }
+.side.area-finanzas h3{ color:#FF8C00 !important; }
+.side.area-modulos h3{ color:#4A8A1E !important; }
+.side.area-agroforestal h3{ color:#1E7A3A !important; }
+.side.area-deportiva h3{ color:#6A1B9A !important; }
+.side.area-biblioteca h3{ color:#0077B6 !important; }
+.side.area-reunion h3{ color:#E63946 !important; }
+.side.area-talleres h3{ color:#D2691E !important; }
+.side.area-all h3{ color:var(--text-1) !important; }
+
+.side p{
+  color:var(--muted);
+  margin:0 0 8px;
+  font-weight:400;
+  line-height:1.45;
+}
+
+/* Overlay */
+.overlay-focus{
+  position:fixed;
+  inset:0;
+  background:rgba(2,6,23,0.45);
+  z-index:1350;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s;
+}
+
+.overlay-focus.show{ opacity:1; pointer-events:auto; }
+
+/* Viewer (imagen grande) */
+.viewer{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(2,6,23,0.8);
+  z-index:1600;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s;
+}
+
+.viewer.open{ opacity:1; pointer-events:auto; }
+.viewer img{
+  max-width:92%;
+  max-height:82vh;
+  border-radius:10px;
+  box-shadow:0 28px 80px rgba(2,6,23,0.6);
+}
+
+/* Focus states */
+.card:focus{ outline:3px solid rgba(11,95,255,0.12); transform:translateY(-6px); }
+.chip:focus{ outline:3px solid rgba(11,95,255,0.12); }
+
+.flip-anim { transition: transform var(--anim-dur) cubic-bezier(.2,.9,.26,1); }
+
+/* Small screens final adjustment */
+@media (max-width:480px){
+  .hero { min-height: 35vh; }
+  .hero-title { font-size: 1.6rem; padding: 8px 12px; }
+}
+/* ---------------------------
+   Animación suave: fade-up
+   --------------------------- */
+
+/* Estado inicial de entrada: tarjeta lista para animarse */
+.card.enter {
+  opacity: 0;
+  transform: translateY(18px) scale(.995);
+  pointer-events: none;
+}
+
+/* Estado final (se añade .show para activar la transición) */
+.card.enter.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  transition: transform .36s cubic-bezier(.2,.9,.26,1), opacity .36s ease;
+}
+
+/* Aseguramos que la clase hidden siga comportándose como antes (salida) */
+.card.hidden {
+  opacity: 0;
+  transform: translateY(18px) scale(.995);
+  pointer-events: none;
+  transition: transform var(--anim-dur) cubic-bezier(.2,.9,.26,1), opacity var(--anim-dur) ease;
+}
+
+/* Evitar conflicto con focus-transform al entrar */
+.card.enter:focus { outline: 3px solid rgba(11,95,255,0.12); transform: translateY(0); }
+
+/* ---------- Evitar parpadeo cuando el footer está visible ---------- */
+
+/* Estabilizar composición: quitar will-change costoso por defecto y forzar render layer */
+.card, .card > img, .hero-video, footer {
+  will-change: auto !important;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Versión 'sin efectos' aplicada cuando el footer entra en pantalla */
+.no-effects .card,
+.no-effects .card:hover,
+.no-effects .card.enter,
+.no-effects .card.enter.show {
+  transform: none !important;
+  transition: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+
+/* Evitar escala/zoom en las imágenes mientras .no-effects está activo */
+.no-effects .card > img {
+  transform: none !important;
+  transition: none !important;
+  filter: none !important;
+}
+
+/* Evitar transiciones en overlay / viewer mientras .no-effects está activo */
+.no-effects .overlay-focus,
+.no-effects .viewer {
+  transition: none !important;
+  will-change: auto !important;
+}
+
+/* Forzar renderización más estable del footer (evita cambios visuales) */
+footer {
+  will-change: auto !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  transition: none !important;
+  filter: none !important;
+}
+
+/* (Opcional) Si prefieres mantener sombras pero quitar solo transforms,
+   reemplaza .no-effects .card... box-shadow: none !important; por mantenerlo. */
+
+   /* Transiciones más suaves y stagger para show/hide */
+.card.transitioning {
+  transition: transform 420ms cubic-bezier(.2,.9,.26,1), opacity 420ms ease, box-shadow 420ms ease;
+  will-change: transform, opacity;
+}
+
+/* clase para elemento que desaparece */
+.card.fade-out {
+  opacity: 0 !important;
+  transform: translateY(18px) scale(.98) !important;
+  pointer-events: none;
+}
+
+/* clase para elemento que aparece */
+.card.fade-in {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+/* estado base más suave (evita cambios bruscos si hay .no-effects) */
+.grid .card { opacity: 1; transform: none; }
+
+/* Ajuste de delay por css (si quieres usar delay por separado) */
+.titulo-instalaciones {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  color: #2c6619;
+  margin-top: 24px;
+  font-size: 50px;
+  font-weight: 700;
+}
+
+
+
+/* ---------------------------
+   Responsive tweaks (tablet + mobile)
+   --------------------------- */
+
+/* Layout general: ajustar max-width para pantallas pequeñas */
+@media (max-width: 1100px) {
+  :root { --max-width: 1000px; }
+}
+
+/* Header / nav: versión móvil */
+@media (max-width: 780px) {
+   .alineacion-menu {
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    background: linear-gradient(90deg,#34791d,#52bd2e );
+    width: 100%;
+    border-radius: 8px;
+    animation: slideDown 0.4s ease forwards;
+    position: absolute;
+    top: 100%; /* Aparece debajo del nav */
+    left: 0;
+  }
+  .alineacion-menu.show {
+    display: flex;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hamburguesa { display: flex; }
+} 
+
+  /* Aumentar toque objetivo en los chips */
+  .chip { padding:10px 14px; font-size:14px; }
+  .chip .count { min-width:30px; padding:3px 9px; font-size:13px; }
+
+  /* Controls: búsqueda y chips apilan verticalmente para no recortar */
+  .controls-row { flex-direction:column; align-items:flex-start; gap:10px; }
+  .chips { max-width:100%; width:100%; }
+
+  /* Ajuste del grid: menos columnas para móviles (más grandes en tablets) */
+  .grid { grid-template-columns: repeat(2, 1fr); gap:12px; }
+
+
+/* Tablet intermediate */
+@media (min-width: 481px) and (max-width: 1100px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+  .chip { padding:9px 12px; font-size:13px; }
+  .chip .count { min-width:28px; padding:3px 8px; }
+  header { padding:10px 18px; }
+}
+
+/* Mobile narrow */
+@media (max-width: 480px) {
+  :root { --gap:10px; }
+  main { padding: 0 12px 80px; }
+  .titulo-instalaciones { font-size:28px; margin-top:16px; }
+
+  /* Grid 1 columna para pantallas muy estrechas */
+  .grid { grid-template-columns: 1fr; gap:12px; }
+
+  /* Bajar el tamaño de las tarjetas para que no ocupen demasiado */
+  .card { border-radius:10px; }
+  .card::before { padding-top: 62%; } /* imagen un poco más alta */
+
+  /* Header: hacer logo pequeño y centrar nombre si quieres (no obligatorio) */
+  .brand h1 { font-size:15px; }
+
+  /* Buscador y chips en columna */
+  .controls{ gap:10px; }
+  .search { width:100%; min-width:0; }
+
+  /* Mejor interacción en chips: ancho completo y scroll horizontal si hay muchas */
+  .chips { display:flex; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:8px; }
+  .chips .chip { flex: 0 0 auto; }
+
+  /* Counter (texto principal) se posiciona debajo en móvil para no chocar */
+  .controls-row .counter { margin-left:0; align-self:flex-end; font-size:13px; }
+
+  /* Viewer (imagen grande) ocupa la pantalla completa en móvil */
+  .viewer img { max-width:96%; max-height:88vh; }
+
+  /* Ajustes visuales al panel lateral para que sea Bottom Sheet en móvil */
+  .side {
+    right: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 90vh !important;
+    bottom: -100vh;
+    top: auto !important;
+    border-radius: 12px 12px 0 0;
+    transition: transform .28s cubic-bezier(.2,.9,.26,1), bottom .28s;
+    box-shadow: 0 -18px 60px rgba(2,6,23,0.18);
+    border-left: none;
+    padding:14px;
+    overflow: auto;
+  }
+  /* Versión abierta del side en móvil: subir desde abajo */
+  .side.open { bottom: 0; right:0; left:0; transform: translateY(0); }
+  /* Posición del botón cerrar y título */
+  .side .close { left: auto; right: 14px; top: 10px; font-size:24px; }
+  .side img { height: 180px; object-fit:cover; }
+  .side h3 { font-size:18px; margin-top:10px; }
+  .side p { font-size:14px; }
+
+  /* Evitar overlay demasiado oscuro en móvil */
+  .overlay-focus { background: rgba(2,6,23,0.45); }
+
+  /* Aumentar hit target del botón ver imagen */
+  #viewLarge { padding:12px 14px; font-size:15px; }
+}
+
+/* Cuando el chip está activo, forzar que el número sea blanco (mejor contraste) */
+.chip.active .count {
+  color: #ffffff !important;
+  background: rgba(0,0,0,0.18) !important;
+  box-shadow: 0 6px 16px rgba(2,6,23,0.08);
+  font-weight:800;
+}
+
+/* Si quieres forzar el contador principal a blanco cuando haya un filtro activo (opcional) */
+.counter.counter-white { color: #ffffff; background: rgba(44,102,25,0.95); padding:6px 8px; border-radius:8px; }
+@media (max-width:780px){
+  /* contador en móvil: más discreto */
+  .counter.counter-white { background: transparent; color: var(--muted); padding:0; border-radius:0; }
+}
+
+
+
+</style>
+
+</head>
+<body>
+  <header>
+    <nav class="menu" id="menu">
+      <div class="alineacion-imra-logo">
+        <a href="index.html">
+          <span class="alineacion-logo"><img src="Imagenes/IMRA-logo.png" alt="logo" width="40px"></span>
+          <span class="alineacion-imra">IPMRA</span>
+        </a>
+        <!-- Hamburguesa -->
+        <div class="hamburguesa" id="hamburguesa">
+          <span></span><span></span><span></span>
+        </div>
+        <!-- Menú -->
+        <ul class="alineacion-menu" id="menu-opciones">
+          <li><a href="index.html">Inicio</a></li>
+          <li>
+            <a href="#">Nosotros <span class="arrow">▼</span></a>
+            <ul class="submenu">
+              <li><a href="nuestra-identidad.html">Nuestra Identidad</a></li>
+              <li><a href="departamentos.html">Departamentos</a></li>
+              <li><a href="maestros.html">Maestros</a></li>
+              <li><a href="instalaciones.html">Instalaciones</a></li>
+            </ul>
+          </li>
+          <li><a href="carreras.html">Oferta Academica</a></li>
+          <li><a href="matriculas.html">Matrículas</a></li>
+          <li class="boton-creditos"><a href="creditos.html">Créditos</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <h2 class="titulo-instalaciones">INSTALACIONES</h2>
+
+<main>
+  <section aria-labelledby="title">
+    <h2 id="title" style="margin:0 0 6px;font-family:'Montserrat',sans-serif; color:#2F9E44">Recorrido por las áreas</h2>
+  <p style="color:var(--muted);margin: 0 0 12px">Haz clic en una foto para ver más información. Filtra por área con los chips o usa la barra de búsqueda.</p>
+
+    <div class="controls" role="toolbar" aria-label="Controles de filtro">
+      <div class="search-row">
+        <div class="search" title="Buscar por título o área">🔎 <input id="searchInst" type="search" placeholder="Buscar por título o área" aria-label="Buscar instalaciones" /></div>
+      </div>
+
+      <div class="controls-row">
+        <div class="chips" role="tablist" aria-label="Filtrar rápido por área">
+          <button class="chip" data-area="all" aria-pressed="true">Todas</button>
+          <button class="chip" data-area="oficinas">Oficinas</button>
+          <button class="chip" data-area="descanso">Descanso / Recreación</button>
+          <button class="chip" data-area="informatica">Informática</button>
+          <button class="chip" data-area="finanzas">Finanzas</button>
+          <button class="chip" data-area="modulos">Módulos</button>
+          <button class="chip" data-area="agroforestal">Agroforestal</button>
+          <button class="chip" data-area="deportiva">Deportiva</button>
+          <button class="chip" data-area="biblioteca">Biblioteca</button>
+          <button class="chip" data-area="reunion">Reunión</button>
+          <button class="chip" data-area="talleres">Talleres</button>
+        </div>
+
+        <div class="counter" id="counter" aria-live="polite">Mostrando 24 de 24</div>
+      </div>
+    </div>
+
+    <!-- Mensaje cuando no hay resultados (oculto por defecto) -->
+    <div class="no-results" id="noResults" role="status" aria-hidden="true">
+      <div class="emoji">😕</div>
+      <div>No se encontraron áreas.<br/><span style="font-weight:600;color:#2c6619;font-size:13px">Prueba otro filtro o borra la búsqueda</span></div>
+    </div>
+
+    <div class="grid" id="grid" role="list" aria-live="polite">
+
+      <!-- Cada tarjeta tiene data-caption (título) y data-meta (descripción ampliada).
+           Asegúrate de que las imágenes con estos nombres existan en /Imagenes/*.jpg -->
+
+      <!-- Oficinas Principales -->
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="oficinas"
+               data-caption="Dirección y Subdirección"
+               data-meta="Funciones: Coordinación académica y administrativa del instituto.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b5fff" stroke-width="1.6"><path d="M3 12h18"/><path d="M12 3v18"/></svg><span class="label">Oficinas</span></div>
+        <img loading="lazy" src="Imagenes/Direccion y Subdireccion.jpg" alt="Dirección y Subdirección">
+        <div class="caption">Dirección y Subdirección</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="oficinas"
+               data-caption="Secretaría 1"
+               data-meta="Funciones: Atención al público, matrículas y trámite de documentos.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><path d="M3 7h18"/><path d="M7 7v14"/></svg><span class="label">Secretaría</span></div>
+        <img loading="lazy" src="Imagenes/Secretaria 1.jpg" alt="Secretaría 1">
+        <div class="caption">Secretaría 1</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="oficinas"
+               data-caption="Secretaría 2"
+               data-meta="Funciones: Soporte administrativo y atención de padres.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><path d="M3 7h18"/><path d="M7 7v14"/></svg><span class="label">Secretaría</span></div>
+        <img loading="lazy" src="Imagenes/Secretaria 2.jpg" alt="Secretaría 2">
+        <div class="caption">Secretaría 2</div>
+      </article>
+
+      <!-- Áreas de Descanso y Recreación -->
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="descanso"
+               data-caption="Área de Descanso 1"
+               data-meta="Descripción: Zona con bancas y sombra para descanso y estudio informal. Ideal para pausas entre clases.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/></svg><span class="label">Descanso</span></div>
+        <img loading="lazy" src="Imagenes/Area de Descanso 1.jpg" alt="Área de Descanso 1">
+        <div class="caption">Área de Descanso 1</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="descanso"
+               data-caption="Área de Descanso 2"
+               data-meta="Descripción: Espacio con murales conmemorativos de las carreras. Función: punto de encuentro y actividades culturales.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/></svg><span class="label">Descanso</span></div>
+        <img loading="lazy" src="Imagenes/Area de Descanso 2.jpg" alt="Área de Descanso 2">
+        <div class="caption">Área de Descanso 2</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="descanso"
+               data-caption="Área de Descanso 3"
+               data-meta="Descripción: Pequeña plazoleta para actividades estudiantiles y grupos. Ideal para clubes y reuniones informales.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/></svg><span class="label">Descanso</span></div>
+        <img loading="lazy" src="Imagenes/Area de Descanso 3.jpg" alt="Área de Descanso 3">
+        <div class="caption">Área de Descanso 3</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="descanso"
+               data-caption="Área de Descanso 4"
+               data-meta="Descripción: Zona de encuentro con sombra y vegetación. Uso: pausa y estudio al aire libre.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/></svg><span class="label">Descanso</span></div>
+        <img loading="lazy" src="Imagenes/Area de Descanso 4.jpg" alt="Área de Descanso 4">
+        <div class="caption">Área de Descanso 4</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="descanso"
+               data-caption="Área de Recreación — El Bosque"
+               data-meta="Descripción: Área verde amplia denominada 'El Bosque' para recreación, caminatas y eventos al aire libre. Perfecta para actividades ambientales.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><path d="M12 2l4 7h-8l4-7z"/></svg><span class="label">Recreación</span></div>
+        <img loading="lazy" src="Imagenes/Area de Recreacion-El Bosque.jpg" alt="Área de Recreación - El Bosque">
+        <div class="caption">Área de Recreación - El Bosque</div>
+      </article>
+
+      <!-- Área de Informática -->
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="informatica"
+               data-caption="Laboratorio de Informática 1"
+               data-meta="Descripción: Laboratorio equipado con estaciones PC para docencia y prácticas.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b5fff" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/></svg><span class="label">Informática</span></div>
+        <img loading="lazy" src="Imagenes/Laboratorio de Informatica 1.jpg" alt="Laboratorio de Informática 1">
+        <div class="caption">Laboratorio de Informática 1</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="informatica"
+               data-caption="Laboratorio de Informática 2"
+               data-meta="Descripción: Segundo laboratorio de informática, destinado a programación y redes.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b5fff" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/></svg><span class="label">Informática</span></div>
+        <img loading="lazy" src="Imagenes/Laboratorio de Informatica 2.jpg" alt="Laboratorio de Informática 2">
+        <div class="caption">Laboratorio de Informática 2</div>
+      </article>
+
+      <!-- Área de Finanzas -->
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="finanzas"
+               data-caption="Área de Finanzas"
+               data-meta="Funciones: Gestión presupuestaria, pagos y contabilidad del instituto. Acceso restringido al personal financiero.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b5fff" stroke-width="1.6"><path d="M3 3h18v18H3z"/></svg><span class="label">Finanzas</span></div>
+        <img loading="lazy" src="Imagenes/Area de Finanzas.jpg" alt="Área de Finanzas">
+        <div class="caption">Área de Finanzas</div>
+      </article>
+
+      <!-- Módulos -->
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="modulos"
+               data-caption="Módulo 1"
+               data-meta="Módulo docente con aulas para clases teóricas y prácticas.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/></svg><span class="label">Módulo</span></div>
+        <img loading="lazy" src="Imagenes/Modulo 1.jpg" alt="Módulo 1">
+        <div class="caption">Módulo 1</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="modulos"
+               data-caption="Módulo 2"
+               data-meta="Módulo con aulas especializadas, aquí se ubica el aula de Español según el plano.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/></svg><span class="label">Módulo</span></div>
+        <img loading="lazy" src="Imagenes/Modulo 2.jpg" alt="Módulo 2">
+        <div class="caption">Módulo 2</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="modulos"
+               data-caption="Módulo 3"
+               data-meta="Módulo 3 — contiene el laboratorio de informática 2 y aulas técnicas.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/></svg><span class="label">Módulo</span></div>
+        <img loading="lazy" src="Imagenes/Modulo 3.jpg" alt="Módulo 3">
+        <div class="caption">Módulo 3</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="modulos"
+               data-caption="Pasillo hacia Módulo 3"
+               data-meta="Pasillo principal que conecta las zonas académicas con el Módulo 3 y áreas técnicas.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b5fff" stroke-width="1.6"><path d="M3 12h18"/></svg><span class="label">Pasillo</span></div>
+        <img loading="lazy" src="Imagenes/Pasillo hacia Modulo 3.jpg" alt="Pasillo hacia Módulo 3">
+        <div class="caption">Pasillo hacia Módulo 3</div>
+      </article>
+
+      <!-- Agroforestal -->
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="agroforestal"
+               data-caption="Área de Agroforestal"
+               data-meta="Descripción: Zona práctica para actividades agroforestales y proyectos de campo. Uso: prácticas, investigación y cultivo demostrativo.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><path d="M12 2l4 7h-8l4-7z"/></svg><span class="label">Agroforestal</span></div>
+        <img loading="lazy" src="Imagenes/Area de Agroforestal.jpg" alt="Área de Agroforestal">
+        <div class="caption">Área de Agroforestal</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="agroforestal"
+               data-caption="El Galpón"
+               data-meta="Descripción: Estructura de almacenamiento y trabajo para materiales agrícolas y herramientas.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><path d="M3 12h18"/></svg><span class="label">Galpón</span></div>
+        <img loading="lazy" src="Imagenes/El Galpon.jpg" alt="El Galpón">
+        <div class="caption">El Galpón</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="agroforestal"
+               data-caption="El Galpón - Cultivo"
+               data-meta="Descripción: Sector dentro del galpón destinado a cultivos demostrativos y siembra experimental.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><path d="M12 2l4 7h-8l4-7z"/></svg><span class="label">Cultivo</span></div>
+        <img loading="lazy" src="Imagenes/El Galpon-Cultivo.jpg" alt="El Galpón - Cultivo">
+        <div class="caption">El Galpón - Cultivo</div>
+      </article>
+
+      <!-- Deportiva -->
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="deportiva"
+               data-caption="Área Deportiva"
+               data-meta="Descripción: Cancha polideportiva para fútbol, baloncesto y actividades físicas. Uso: clases de educación física y torneos.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b5fff" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span class="label">Deportiva</span></div>
+        <img loading="lazy" src="Imagenes/Area Deportiva.jpg" alt="Área Deportiva">
+        <div class="caption">Área Deportiva</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="deportiva"
+               data-caption="El Campo"
+               data-meta="Descripción: Terreno exterior utilizado para prácticas agrícolas y eventos deportivos al aire libre.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b5fff" stroke-width="1.6"><path d="M2 12h20"/></svg><span class="label">Campo</span></div>
+        <img loading="lazy" src="Imagenes/El Campo.jpg" alt="El Campo">
+        <div class="caption">El Campo</div>
+      </article>
+
+      <!-- Biblioteca -->
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="biblioteca"
+               data-caption="Biblioteca"
+               data-meta="Descripción: Biblioteca central con colección de libros, salas de estudio individuales y áreas para investigación.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b5fff" stroke-width="1.6"><path d="M3 19.5A2.5 2.5 0 0 0 5.5 22H21"/></svg><span class="label">Biblioteca</span></div>
+        <img loading="lazy" src="Imagenes/Biblioteca.jpg" alt="Biblioteca">
+        <div class="caption">Biblioteca</div>
+      </article>
+
+      <!-- Espacios de reunión -->
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="reunion"
+               data-caption="Auditorio"
+               data-meta="Descripción: Auditorio para actos, presentaciones y conferencias. Equipamiento: escenario y sistema de sonido.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><path d="M2 12h20"/></svg><span class="label">Auditorio</span></div>
+        <img loading="lazy" src="Imagenes/Auditorio.jpg" alt="Auditorio">
+        <div class="caption">Auditorio</div>
+      </article>
+
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="reunion"
+               data-caption="Plaza Cívica"
+               data-meta="Descripción: Espacio central para ceremonias, actos cívicos y eventos de integración.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b5fff" stroke-width="1.6"><path d="M12 2v20"/></svg><span class="label">Plaza</span></div>
+        <img loading="lazy" src="Imagenes/Plaza Civica.jpg" alt="Plaza Cívica">
+        <div class="caption">Plaza Cívica</div>
+      </article>
+
+      <!-- Talleres -->
+      <article class="card flip-anim" role="listitem" tabindex="0"
+               data-area="talleres"
+               data-caption="Área de Talleres"
+               data-meta="Descripción: Conjunto de talleres técnicos (metales, hogar y agropecuaria). Uso: prácticas de formación técnica.">
+        <div class="cat-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b8fff" stroke-width="1.6"><path d="M14.7 6.3a7 7 0 1 0 2 10.4L16 18l-2.6-2.6"/></svg><span class="label">Talleres</span></div>
+        <img loading="lazy" src="Imagenes/Area de Talleres.jpg" alt="Área de Talleres">
+        <div class="caption">Área de Talleres</div>
+      </article>
+
+    </div>
+
+  </section>
+</main>
+
+<div class="overlay-focus" id="overlay" aria-hidden="true"></div>
+
+<aside class="side" id="side" aria-hidden="true" role="complementary" aria-labelledby="sideTitle">
+  <button class="close" id="closeSide" aria-label="Cerrar detalles">×</button>
+  <img id="sideImg" src="" alt="">
+  <h3 id="sideTitle">Título del área</h3>
+  <p class="desc" id="sideDesc">Descripción breve del área.</p>
+  <div class="meta-row" id="sideMetaRow" aria-hidden="true">
+    <div><strong>Funciones:</strong> <span id="sideMeta">—</span></div>
+  </div>
+  <div style="margin-top:12px;display:flex;gap:8px">
+    <button id="viewLarge" style="background:var(--accent);color:#fff;border:none;padding:10px 12px;border-radius:8px;cursor:pointer">Ver imagen en grande</button>
+    <button id="closeSideBtn" style="background:#fff;border:1px solid rgba(15,23,36,0.06);padding:10px 12px;border-radius:8px;cursor:pointer">Cerrar</button>
+  </div>
+</aside>
+
+<div class="viewer" id="viewer" aria-hidden="true" role="dialog" aria-modal="true">
+  <button id="vClose" aria-label="Cerrar visor" style="position:fixed;right:16px;top:16px;background:transparent;color:#fff;border:none;font-size:28px;cursor:pointer">✕</button>
+  <img id="vImg" src="" alt="">
+</div>
+
+<!-- ====== FOOTER ====== -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="Imagenes/IMRA-logo.png" alt="logo">
+        <div class="logo-text">
+          <div class="vertical-line"></div>
+          <span class="vertical-ipmra">I<br>P<br>M<br>R<br>A</span>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <h4>Síguenos en nuestra red social</h4>
+        <ul>
+          <li>
+            <a class="boton-facebook" href="https://www.facebook.com/profile.php?id=100064632464818" target="_blank">
+              <img src="Imagenes/facebook.png" alt="facebook" width="16px"> Visita nuestro Facebook
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Instituto Polivalente Modesto Rodas Alvarado - Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+
+<script src="menu-desplegable.js"></script>
+<script>
+  // ----------------- Responsive side (bottom-sheet on mobile) - REEMPLAZAR IIFE -----------------
+(function(){
+  const side = document.getElementById('side');
+  const overlay = document.getElementById('overlay');
+  const closeBtn = document.getElementById('closeSide');
+  const closeSideBtn = document.getElementById('closeSideBtn');
+
+  if(!side || !overlay) return; // seguridad
+
+  // Detectar mobile por media query
+  const mq = window.matchMedia('(max-width:480px)');
+  function isMobile() { return mq.matches; }
+
+  // Abrir side (cuando el resto del script llama side.classList.add('open') este bloque solo ajusta estilos si es mobile)
+  // Para compatibilidad, observamos cambios en la clase 'open' pero sin MutationObserver complejo:
+  const observer = new MutationObserver(() => {
+    if(side.classList.contains('open')) {
+      // abrir: aplicar estilos para mobile bottom-sheet
+      if(isMobile()) {
+        // forzar bottom-sheet visible
+        side.style.left = '0';
+        side.style.right = '0';
+        side.style.bottom = '0';
+        side.style.top = 'auto';
+        side.style.width = '100%';
+        side.style.height = '90vh';
+        side.style.borderRadius = '12px 12px 0 0';
+        // asegurar que el overlay se muestre
+        overlay.classList.add('show');
+        overlay.style.opacity = '1';
+      } else {
+        // desktop: limpiar restos mobile por si quedaron
+        side.style.left = '';
+        side.style.right = '';
+        side.style.bottom = '';
+        side.style.top = '';
+        side.style.width = '';
+        side.style.height = '';
+        side.style.borderRadius = '';
+      }
+      // bloquear scroll del body
+      document.body.style.overflow = 'hidden';
+    } else {
+      // cerrar: limpiar siempre los estilos inline aplicados
+      side.style.left = '';
+      side.style.right = '';
+      side.style.bottom = '';
+      side.style.top = '';
+      side.style.width = '';
+      side.style.height = '';
+      side.style.borderRadius = '';
+      overlay.classList.remove('show');
+      overlay.style.opacity = '0';
+      document.body.style.overflow = '';
+    }
+  });
+  observer.observe(side, { attributes: true, attributeFilter: ['class'] });
+
+  // Click / touch en overlay cierra panel (consistente tanto en mobile como en desktop)
+  overlay.addEventListener('click', closeSideSimple, { passive: true });
+  overlay.addEventListener('touchstart', closeSideSimple, { passive: true });
+
+  // Botones de cerrar (por si la otra IIFE no logra enganchar)
+  if(closeBtn) closeBtn.addEventListener('click', closeSideSimple);
+  if(closeSideBtn) closeSideBtn.addEventListener('click', closeSideSimple);
+
+  // También cerrar con Escape (si el side está abierto)
+  document.addEventListener('keydown', (ev) => {
+    if(ev.key === 'Escape' && side.classList.contains('open')) {
+      closeSideSimple();
+    }
+  });
+
+  // Función de cierre simple, independiente del scope del otro IIFE
+  function closeSideSimple(){
+    try {
+      side.classList.remove('open');
+      side.setAttribute('aria-hidden','true');
+      overlay.classList.remove('show');
+      overlay.style.opacity = '0';
+      overlay.setAttribute('aria-hidden','true');
+      // limpiar cualquier estilo inline que pueda quedar (importante para mobile)
+      side.style.left = '';
+      side.style.right = '';
+      side.style.bottom = '';
+      side.style.top = '';
+      side.style.width = '';
+      side.style.height = '';
+      side.style.borderRadius = '';
+      document.body.style.overflow = '';
+    } catch(e){
+      // si algo falla, intentamos al menos forzar el estado visible/oculto sin romper
+      console.warn('closeSideSimple fallo', e);
+    }
+  }
+
+  // Limpieza al cambiar entre mobile/desktop: cuando cambie la media query, si el side no está abierto simplemente quitamos estilos
+  mq.addEventListener ? mq.addEventListener('change', () => {
+    if(!side.classList.contains('open')) {
+      side.style.left = '';
+      side.style.right = '';
+      side.style.bottom = '';
+      side.style.top = '';
+      side.style.width = '';
+      side.style.height = '';
+      side.style.borderRadius = '';
+      overlay.classList.remove('show');
+      overlay.style.opacity = '0';
+    }
+  }) : mq.addListener(() => {
+    if(!side.classList.contains('open')) {
+      side.style.left = '';
+      side.style.right = '';
+      side.style.bottom = '';
+      side.style.top = '';
+      side.style.width = '';
+      side.style.height = '';
+      side.style.borderRadius = '';
+      overlay.classList.remove('show');
+      overlay.style.opacity = '0';
+    }
+  });
+
+})();
+(function(){
+  const grid = document.getElementById('grid');
+  const cards = Array.from(grid.querySelectorAll('.card'));
+  const side = document.getElementById('side');
+  const overlay = document.getElementById('overlay');
+  const sideImg = document.getElementById('sideImg');
+  const sideTitle = document.getElementById('sideTitle');
+  const sideDesc = document.getElementById('sideDesc');
+  const sideMeta = document.getElementById('sideMeta');
+  const sideMetaRow = document.getElementById('sideMetaRow');
+  const closeSide = document.getElementById('closeSide');
+  const closeSideBtn = document.getElementById('closeSideBtn');
+  const viewLarge = document.getElementById('viewLarge');
+
+  // Gradientes por área — sincronizar con las reglas CSS para consistencia visual
+  const AREA_GRADIENTS = {
+    oficinas: 'linear-gradient(135deg,#0b5fff,#0066ff)',
+    descanso: 'linear-gradient(135deg,#FFD39F,#FF8A65)',
+    informatica: 'linear-gradient(135deg,#00C2A8,#007971)',
+    finanzas: 'linear-gradient(135deg,#F9C80E,#FF8C00)',
+    modulos: 'linear-gradient(135deg,#8CC63E,#4A8A1E)',
+    agroforestal: 'linear-gradient(135deg,#2F9E44,#1E7A3A)',
+    deportiva: 'linear-gradient(135deg,#9C27B0,#6A1B9A)',
+    biblioteca: 'linear-gradient(135deg,#0077B6,#00A8E8)',
+    reunion: 'linear-gradient(135deg,#E63946,#FF6B6B)',
+    talleres: 'linear-gradient(135deg,#8B4513,#D2691E)',
+    all: 'linear-gradient(135deg,#eaf8e7,#dff4dc)'
+  };
+
+  // Colores sólidos por área (usados para títulos y textos)
+  const AREA_COLORS = {
+    oficinas: '#0066ff',
+    descanso: '#FF8A65',
+    informatica: '#007971',
+    finanzas: '#FF8C00',
+    modulos: '#4A8A1E',
+    agroforestal: '#1E7A3A',
+    deportiva: '#6A1B9A',
+    biblioteca: '#0077B6',
+    reunion: '#E63946',
+    talleres: '#D2691E',
+    all: 'var(--text-1)'
+  };
+
+  
+
+  const viewer = document.getElementById('viewer');
+  const vImg = document.getElementById('vImg');
+  const vClose = document.getElementById('vClose');
+
+  const searchInst = document.getElementById('searchInst');
+  const chips = Array.from(document.querySelectorAll('.chip'));
+  const counter = document.getElementById('counter');
+  const noResults = document.getElementById('noResults');
+
+  // Añadir span.count a cada chip (si no existe) y función para actualizar contadores
+  function ensureChipCounts(){
+    chips.forEach(ch => {
+      if(!ch.querySelector('.count')){
+        const span = document.createElement('span');
+        span.className = 'count';
+        span.textContent = '';
+        ch.appendChild(span);
+      }
+    });
+  }
+  (function(){
+    const footer = document.querySelector('footer');
+    if (!footer) return;
+
+    // Observer: cuando al menos 2% del footer esté visible activamos no-effects
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          document.documentElement.classList.add('no-effects');
+          document.body.classList.add('no-effects');
+        } else {
+          document.documentElement.classList.remove('no-effects');
+          document.body.classList.remove('no-effects');
+        }
+      });
+    }, { threshold: [0, 0.02, 0.1] });
+
+    observer.observe(footer);
+
+    // Fallback: si IntersectionObserver no existe, aplicar no-effects por seguridad
+    if (!('IntersectionObserver' in window)) {
+      document.documentElement.classList.add('no-effects');
+      document.body.classList.add('no-effects');
+    }
+  })();
+
+  function updateChipCounts(q){
+    const qn = normalizeTextSimple(q || '');
+    const counts = {};
+    cards.forEach(c => {
+      const area = (c.dataset.area || 'all').toLowerCase();
+      const caption = normalizeTextSimple(c.dataset.caption || (c.querySelector('img')?.alt || ''));
+      const meta = normalizeTextSimple(c.dataset.meta || '');
+      const match = !qn || caption.includes(qn) || meta.includes(qn) || area.includes(qn);
+      if(!counts[area]) counts[area] = 0;
+      if(match) counts[area]++;
+    });
+    // total
+    const total = Object.values(counts).reduce((a,b)=>a+(b||0),0);
+    chips.forEach(ch => {
+      const area = (ch.dataset.area || 'all').toLowerCase();
+      const span = ch.querySelector('.count');
+      if(!span) return;
+      if(area === 'all') span.textContent = total; else span.textContent = counts[area] || 0;
+    });
+  }
+
+  ensureChipCounts();
+
+  let currentIndex = -1;
+  let lastPositions = new Map();
+
+  function recordPositions() {
+    lastPositions.clear();
+    Array.from(grid.children).forEach(c => lastPositions.set(c, c.getBoundingClientRect()));
+  }
+  function playFLIP() {
+    Array.from(grid.children).forEach(c => {
+      const first = lastPositions.get(c);
+      const last = c.getBoundingClientRect();
+      if(!first) return;
+      const dx = first.left - last.left;
+      const dy = first.top - last.top;
+      if(dx || dy){
+        c.style.transform = `translate(${dx}px, ${dy}px)`;
+        requestAnimationFrame(()=> {
+          c.style.transition = `transform var(--anim-dur) cubic-bezier(.2,.9,.26,1), opacity var(--anim-dur)`;
+          c.style.transform = '';
+          c.addEventListener('transitionend', function te(){
+            c.style.transition = '';
+            c.removeEventListener('transitionend', te);
+          });
+        });
+      }
+    });
+  }
+
+  function normalizeTextSimple(s){ return (s||'').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim(); }
+
+ function applyFilter(value, query){
+  // Guardar posiciones para FLIP
+  recordPositions();
+
+  const v = (value || 'all').toLowerCase();
+  const q = (query || '').toString().toLowerCase().trim();
+  const qn = normalizeTextSimple(q);
+
+  // arrays para ordenar DOM: matches primero, luego otros
+  const matches = [];
+  const others = [];
+  cards.forEach(card => {
+    const area = (card.dataset.area || '').toLowerCase();
+    const caption = normalizeTextSimple(card.dataset.caption || (card.querySelector('img')?.alt || ''));
+    const meta = normalizeTextSimple(card.dataset.meta || '');
+    const areaMatch = (v === 'all') || (area === v);
+    const queryMatch = !qn || caption.includes(qn) || meta.includes(qn) || area.includes(qn);
+    const match = areaMatch && queryMatch;
+    if(match) matches.push(card); else others.push(card);
+  });
+
+  // reordenar DOM: matches primero
+  const fragment = document.createDocumentFragment();
+  matches.forEach(c => fragment.appendChild(c));
+  others.forEach(c => fragment.appendChild(c));
+  grid.appendChild(fragment);
+
+  // --------- Preparar animaciones ---------
+  const showDuration = 420; // ms (coincide con CSS)
+  const stagger = 60; // ms entre tarjetas que aparecen (ajustable)
+
+  // A) Preparamos los que van a desaparecer: les aplicamos fade-out y luego los quitamos del flujo
+  others.forEach(c => {
+    // Asegurarse de estar visibles para calcular FLIP
+    c.style.display = 'block';
+    c.classList.remove('fade-in');
+    c.classList.add('transitioning', 'fade-out');
+    c.setAttribute('aria-hidden','true');
+  });
+
+  // B) Preparamos los matches: quitamos clases de oculto, los mostramos y los dejamos listos para fade-in
+  matches.forEach((c, idx) => {
+    c.style.display = 'block';            // aseguramos que estén en el flujo
+    c.classList.remove('hidden','fade-out');
+    c.classList.add('transitioning');
+    // forzamos estado inicial ligeramente desplazado si venían ocultos (mejor percepción)
+    if (!c.classList.contains('enter')) {
+      c.style.opacity = '0';
+      c.style.transform = 'translateY(8px) scale(.997)';
+    }
+    c.setAttribute('aria-hidden','false');
+  });
+
+  // Ejecutar FLIP (reposición) en siguiente frame para evitar saltos
+  requestAnimationFrame(() => {
+    playFLIP();
+
+    // Aplicar staggered fade-in a los matches
+    matches.forEach((node, i) => {
+      const delay = i * stagger;
+      setTimeout(() => {
+        node.classList.remove('fade-out');
+        node.classList.add('fade-in');
+        // limpiar inline styles si estaban puestos
+        node.style.opacity = '';
+        node.style.transform = '';
+        // remover clase enter/show si existían
+        node.classList.remove('enter','show');
+        // tras la transición se limpia la clase 'transitioning'
+        const onEnd = (ev) => {
+          if(ev && ev.propertyName && ev.propertyName !== 'opacity' && ev.propertyName !== 'transform') return;
+          node.classList.remove('transitioning','fade-in');
+          node.removeEventListener('transitionend', onEnd);
+        };
+        node.addEventListener('transitionend', onEnd);
+      }, delay);
+    });
+
+    // Para los que desaparecen: esperar la duración y luego display:none
+    setTimeout(() => {
+      others.forEach(c => {
+        if (c.classList.contains('fade-out')) {
+          // quitar visualmente del flujo
+          c.style.display = 'none';
+          // limpiar clases para no interferir luego
+          c.classList.remove('transitioning','fade-out');
+        }
+      });
+      // recalcular posiciones ahora que ya no hay elementos visibles
+      recordPositions();
+    }, showDuration + (matches.length * stagger));
+  });
+
+  // actualizar contador y mensaje no-results
+  const shown = matches.length;
+  counter.textContent = `Mostrando ${shown} de ${cards.length}`;
+
+  // actualizar contadores de chips para que muestren el número coincidencias
+  try { updateChipCounts(q); } catch(e) {}
+
+  if(noResults){
+    if(shown === 0){
+      noResults.style.display = 'flex';
+      noResults.setAttribute('aria-hidden','false');
+    } else {
+      noResults.style.display = 'none';
+      noResults.setAttribute('aria-hidden','true');
+    }
+  }
+}
+function applyFilter(value, query){
+  // Guardar posiciones para FLIP
+  recordPositions();
+
+  const v = (value || 'all').toLowerCase();
+  const q = (query || '').toString().toLowerCase().trim();
+  const qn = normalizeTextSimple(q);
+
+  // arrays para ordenar DOM: matches primero, luego otros
+  const matches = [];
+  const others = [];
+  cards.forEach(card => {
+    const area = (card.dataset.area || '').toLowerCase();
+    const caption = normalizeTextSimple(card.dataset.caption || (card.querySelector('img')?.alt || ''));
+    const meta = normalizeTextSimple(card.dataset.meta || '');
+    const areaMatch = (v === 'all') || (area === v);
+    const queryMatch = !qn || caption.includes(qn) || meta.includes(qn) || area.includes(qn);
+    const match = areaMatch && queryMatch;
+    if(match) matches.push(card); else others.push(card);
+  });
+
+  // reordenar DOM: matches primero
+  const fragment = document.createDocumentFragment();
+  matches.forEach(c => fragment.appendChild(c));
+  others.forEach(c => fragment.appendChild(c));
+  grid.appendChild(fragment);
+
+  // --------- Preparar animaciones ---------
+  const showDuration = 420; // ms (coincide con CSS)
+  const stagger = 60; // ms entre tarjetas que aparecen (ajustable)
+
+  // A) Preparamos los que van a desaparecer: les aplicamos fade-out y luego los quitamos del flujo
+  others.forEach(c => {
+    // Asegurarse de estar visibles para calcular FLIP
+    c.style.display = 'block';
+    c.classList.remove('fade-in');
+    c.classList.add('transitioning', 'fade-out');
+    c.setAttribute('aria-hidden','true');
+  });
+
+  // B) Preparamos los matches: quitamos clases de oculto, los mostramos y los dejamos listos para fade-in
+  matches.forEach((c, idx) => {
+    c.style.display = 'block';            // aseguramos que estén en el flujo
+    c.classList.remove('hidden','fade-out');
+    c.classList.add('transitioning');
+    // forzamos estado inicial ligeramente desplazado si venían ocultos (mejor percepción)
+    if (!c.classList.contains('enter')) {
+      c.style.opacity = '0';
+      c.style.transform = 'translateY(8px) scale(.997)';
+    }
+    c.setAttribute('aria-hidden','false');
+  });
+
+  // Ejecutar FLIP (reposición) en siguiente frame para evitar saltos
+  requestAnimationFrame(() => {
+    playFLIP();
+
+    // Aplicar staggered fade-in a los matches
+    matches.forEach((node, i) => {
+      const delay = i * stagger;
+      setTimeout(() => {
+        node.classList.remove('fade-out');
+        node.classList.add('fade-in');
+        // limpiar inline styles si estaban puestos
+        node.style.opacity = '';
+        node.style.transform = '';
+        // remover clase enter/show si existían
+        node.classList.remove('enter','show');
+        // tras la transición se limpia la clase 'transitioning'
+        const onEnd = (ev) => {
+          if(ev && ev.propertyName && ev.propertyName !== 'opacity' && ev.propertyName !== 'transform') return;
+          node.classList.remove('transitioning','fade-in');
+          node.removeEventListener('transitionend', onEnd);
+        };
+        node.addEventListener('transitionend', onEnd);
+      }, delay);
+    });
+
+    // Para los que desaparecen: esperar la duración y luego display:none
+    setTimeout(() => {
+      others.forEach(c => {
+        if (c.classList.contains('fade-out')) {
+          // quitar visualmente del flujo
+          c.style.display = 'none';
+          // limpiar clases para no interferir luego
+          c.classList.remove('transitioning','fade-out');
+        }
+      });
+      // recalcular posiciones ahora que ya no hay elementos visibles
+      recordPositions();
+    }, showDuration + (matches.length * stagger));
+  });
+
+  // actualizar contador y mensaje no-results
+  const shown = matches.length;
+  counter.textContent = `Mostrando ${shown} de ${cards.length}`;
+
+  // actualizar contadores de chips para que muestren el número coincidencias
+  try { updateChipCounts(q); } catch(e) {}
+
+  if(noResults){
+    if(shown === 0){
+      noResults.style.display = 'flex';
+      noResults.setAttribute('aria-hidden','false');
+    } else {
+      noResults.style.display = 'none';
+      noResults.setAttribute('aria-hidden','true');
+    }
+  }
+}
+
+
+
+  function setActiveChip(area){
+    chips.forEach(ch => {
+      const is = ch.dataset.area === area;
+      ch.classList.toggle('active', is);
+      ch.setAttribute('aria-pressed', is ? 'true' : 'false');
+      // aplicar estilo inline para el estado activo igual que en maestros
+      try {
+        const a = ch.dataset.area || 'all';
+        const grad = AREA_GRADIENTS[a];
+        const countEl = ch.querySelector('.count');
+        if(is && a !== 'all' && grad){
+          // aplicar gradiente pero mantener texto en color oscuro como en la imagen
+          ch.style.background = grad;
+          ch.style.color = '';
+          if(countEl){ countEl.style.background = 'rgba(255,255,255,0.14)'; countEl.style.color = '#2c6619'; }
+        } else {
+          // restaurar estado neutro
+          ch.style.background = '';
+          ch.style.color = '';
+          if(countEl){ countEl.style.background = ''; countEl.style.color = ''; }
+        }
+      } catch(e){}
+    });
+  }
+
+  // chips act as filter buttons; clicking sets active area and reapplies filter with current search
+  chips.forEach(ch => {
+    ch.addEventListener('click', () => {
+      const area = ch.dataset.area || 'all';
+      setActiveChip(area);
+      const q = (searchInst && searchInst.value) ? searchInst.value.trim() : '';
+      applyFilter(area, q);
+      ch.focus();
+    });
+    ch.addEventListener('keydown', (ev) => { if(ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); ch.click(); } });
+  });
+
+  // búsqueda en vivo: usa área activo + texto de búsqueda
+  if(searchInst){
+    searchInst.addEventListener('input', (e)=>{
+      const q = (e.target.value || '').trim();
+      const active = document.querySelector('.chip.active')?.dataset.area || 'all';
+      applyFilter(active, q);
+    });
+  }
+
+ function openSide(idx){
+  const card = cards[idx];
+  if(!card || card.classList.contains('hidden')) return;
+  const img = card.querySelector('img');
+  sideImg.src = img.currentSrc || img.src;
+  sideImg.alt = img.alt || '';
+  // Determinar área desde los atributos de la tarjeta
+  const area = (card.dataset.area || 'all').toLowerCase();
+  sideTitle.textContent = card.dataset.caption || img.alt || '';
+  // Colorear el título según el área
+  try {
+    const titleColor = AREA_COLORS[area] || 'inherit';
+    sideTitle.style.color = titleColor;
+  } catch (e) {}
+
+  // Mostrar únicamente la descripción (data-meta)
+  const rawMeta = (card.dataset.meta || '').trim();
+  sideDesc.textContent = rawMeta;
+
+  // Colorear el botón "Ver imagen en grande" según el área de la tarjeta
+  const grad = AREA_GRADIENTS[area] || 'var(--accent)';
+  try {
+    viewLarge.style.transition = 'background .22s ease, color .18s ease';
+    viewLarge.style.background = grad;
+    viewLarge.style.color = '#fff';
+  } catch (e) {
+    // si algo falla, no obstruimos la apertura del side
+  }
+
+  // Asegurarnos que la fila de metadatos esté oculta y vacía
+  const metaRow = document.getElementById('sideMetaRow');
+  if(metaRow){
+    metaRow.style.display = 'none';
+    metaRow.setAttribute('aria-hidden','true');
+    metaRow.innerHTML = ''; // dejarla vacía por si quedó algo
+  }
+
+  // Ajustar clase del side para aplicar color por área (limpiamos antes)
+  try {
+    const AREAS = ['oficinas','descanso','informatica','finanzas','modulos','agroforestal','deportiva','biblioteca','reunion','talleres','all'];
+    AREAS.forEach(a => side.classList.remove('area-' + a));
+    side.classList.add('area-' + (area || 'all'));
+  } catch (e) {}
+
+  side.classList.add('open');
+  side.setAttribute('aria-hidden','false');
+  overlay.classList.add('show');
+  overlay.style.opacity = '1';
+  overlay.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+  currentIndex = idx;
+  side.focus();
+}
+
+  function closeSideFunc(){
+    side.classList.remove('open');
+    side.setAttribute('aria-hidden','true');
+    overlay.classList.remove('show');
+    overlay.style.opacity = '0';
+    overlay.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    currentIndex = -1;
+    // Restaurar color original del botón Ver imagen en grande
+    try {
+      viewLarge.style.background = 'var(--accent)';
+      viewLarge.style.color = '#fff';
+      // Restaurar color del título del side
+      if (sideTitle) sideTitle.style.color = '';
+      // Quitar clases de área del side
+      try {
+        const AREAS = ['oficinas','descanso','informatica','finanzas','modulos','agroforestal','deportiva','biblioteca','reunion','talleres','all'];
+        AREAS.forEach(a => side.classList.remove('area-' + a));
+      } catch (e) {}
+    } catch (e) {}
+  }
+  closeSide.addEventListener('click', closeSideFunc);
+  closeSideBtn.addEventListener('click', closeSideFunc);
+  overlay.addEventListener('click', closeSideFunc);
+
+  function openViewer(idx){
+    const card = cards[idx];
+    if(!card || card.classList.contains('hidden')) return;
+    const img = card.querySelector('img');
+    vImg.src = img.currentSrc || img.src;
+    vImg.alt = img.alt || '';
+    viewer.classList.add('open');
+    viewer.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeViewer(){
+    viewer.classList.remove('open');
+    viewer.setAttribute('aria-hidden','true');
+    vImg.src = '';
+    document.body.style.overflow = '';
+  }
+  vClose.addEventListener('click', closeViewer);
+  viewer.addEventListener('click', (e)=> { if(e.target === viewer) closeViewer(); });
+
+  grid.addEventListener('click', (e)=>{
+    const card = e.target.closest('.card');
+    if(!card) return;
+    const idx = cards.indexOf(card);
+    if(e.shiftKey) { openViewer(idx); } else { openSide(idx); }
+  });
+
+    cards.forEach((c, i) => {
+    // abrir side con Enter / Space cuando la tarjeta tiene foco
+    c.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        openSide(i);
+      }
+      // permitir abrir viewer con Shift+Enter como alternativa
+      if ((ev.key === 'Enter' || ev.key === ' ') && ev.shiftKey) {
+        ev.preventDefault();
+        openViewer(i);
+      }
+    });
+
+    // mejora de accesibilidad: indicar foco visible
+    c.addEventListener('focus', () => c.classList.add('focused'));
+    c.addEventListener('blur', () => c.classList.remove('focused'));
+  });
+
+  // navegación dentro del panel lateral: prev / next
+  function showIndex(idx) {
+    if (idx < 0 || idx >= cards.length) return;
+    // si la tarjeta está oculta, saltar hasta la siguiente visible
+    if (cards[idx].classList.contains('hidden')) {
+      // buscar siguiente visible hacia adelante
+      let forward = idx + 1;
+      while (forward < cards.length && cards[forward].classList.contains('hidden')) forward++;
+      if (forward < cards.length) return showIndex(forward);
+      // o buscar hacia atrás
+      let back = idx - 1;
+      while (back >= 0 && cards[back].classList.contains('hidden')) back--;
+      if (back >= 0) return showIndex(back);
+      return;
+    }
+    openSide(idx);
+    // mover foco a la tarjeta y hacer scroll si es necesario
+    cards[idx].focus();
+  }
+
+  // prev / next utilities
+  function nextIndex() {
+    if (currentIndex < 0) return;
+    let i = currentIndex + 1;
+    while (i < cards.length && cards[i].classList.contains('hidden')) i++;
+    if (i < cards.length) showIndex(i);
+  }
+  function prevIndex() {
+    if (currentIndex < 0) return;
+    let i = currentIndex - 1;
+    while (i >= 0 && cards[i].classList.contains('hidden')) i--;
+    if (i >= 0) showIndex(i);
+  }
+
+  // teclas globales: Escape cierra viewer/side, flechas cuando side abierto navegan
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape') {
+      if (viewer.classList.contains('open')) closeViewer();
+      else if (side.classList.contains('open')) closeSideFunc();
+    }
+    if (side.classList.contains('open')) {
+      if (ev.key === 'ArrowRight') { ev.preventDefault(); nextIndex(); }
+      if (ev.key === 'ArrowLeft')  { ev.preventDefault(); prevIndex(); }
+      if (ev.key === 'Home') { ev.preventDefault(); showIndex(0); }
+      if (ev.key === 'End')  { ev.preventDefault(); showIndex(cards.length - 1); }
+    }
+  });
+
+  // botones dentro del side
+  viewLarge.addEventListener('click', () => {
+    if (currentIndex >= 0) openViewer(currentIndex);
+  });
+
+  // permitir navegación con clics prev/next al hacer click en la imagen grande (ejemplo: clic derecho o área)
+  // (aquí solo se implementa doble-clic como 'next' para usuarios de ratón)
+  sideImg.addEventListener('dblclick', () => nextIndex());
+
+  // cuando se abre el viewer, permitir navegar entre imágenes con flechas
+  viewer.addEventListener('keydown', (ev) => {
+    if (ev.key === 'ArrowRight') { ev.preventDefault(); nextIndex(); }
+    if (ev.key === 'ArrowLeft')  { ev.preventDefault(); prevIndex(); }
+    if (ev.key === 'Escape')     { ev.preventDefault(); closeViewer(); }
+  });
+
+  // si se hace click en el overlay mientras el side está abierto, ya está manejado arriba.
+  // Asegurarnos que el side pueda navegarse con botones (añadir prev/next visibles opcionales)
+  // (Si quieres, puedo añadir flechas visibles en el side; por ahora usamos teclado y doble-clic.)
+
+  // FLIP: registrar posiciones iniciales y contador
+  recordPositions();
+  counter.textContent = `Mostrando ${cards.length} de ${cards.length}`;
+
+  // Inicializar chip activo "all"
+  setActiveChip('all');
+  // Aplicar filtro inicial (sin búsqueda)
+  applyFilter('all', '');
+  // actualizar contadores iniciales en los chips
+  try { updateChipCounts(''); } catch(e) {}
+
+  // Manejar resize/scroll rápido para recalcular posiciones (para FLIP)
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => recordPositions(), 120);
+  });
+
+  // Recalcular posiciones antes de aplicar filtros (ya se hace en applyFilter)
+  // Pero también recalcular cuando imágenes cargan (para evitar saltos)
+  const imgs = Array.from(document.querySelectorAll('.card img'));
+  let imgsToLoad = imgs.length;
+  imgs.forEach(img => {
+    if (img.complete) {
+      imgsToLoad--;
+    } else {
+      img.addEventListener('load', () => {
+        imgsToLoad--;
+        if (imgsToLoad <= 0) {
+          recordPositions();
+        }
+      });
+      img.addEventListener('error', () => {
+        imgsToLoad--;
+        if (imgsToLoad <= 0) recordPositions();
+      });
+    }
+  });
+  // fallback por si las imágenes ya estaban cargadas
+  setTimeout(() => recordPositions(), 800);
+
+  // accesibilidad adicional: marcar rol/label en tarjetas
+  cards.forEach(c => {
+    const cap = c.dataset.caption || c.querySelector('img')?.alt || 'Área';
+    c.setAttribute('aria-label', cap);
+  });
+
+  // fin del IIFE
+})();
+// Cambio de color al hacer scroll
+window.addEventListener("scroll", function() {
+  const menu = document.getElementById("menu");
+  if (window.scrollY > 50) {
+    menu.classList.add("scrolled");
+  } else {
+    menu.classList.remove("scrolled");
+  }
+});
+
+
+
+
+</script>
+</body>
+</html>

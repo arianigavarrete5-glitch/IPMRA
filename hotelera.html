@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituto Modesto Rodas Alvarado - Administración Hotelera</title>
+  <style>
+   /* ====== RESET ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  padding-top: 50px;
+  background: #f9f9f9;
+}
+.hero {
+  align-items: flex-start; /* alinea contenido arriba */
+  padding-top: 20px;       /* opcional, ajusta según necesites */
+}
+/* ====== MENU ====== */
+.menu {
+  background: linear-gradient(90deg,#b45a1d, #953f06);
+  padding: 10px 0;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+.scrolled {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  background: linear-gradient(90deg,#b45a1d, #953f06);
+}
+.alineacion-imra-logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  position: relative;
+}
+.alineacion-imra-logo a {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:1.2rem;
+  color:white;
+}
+.alineacion-logo img { border-radius:50%; }
+
+/* ====== MENU OPCIONES ====== */
+.alineacion-menu {
+  list-style:none;
+  display:flex;
+  gap:2rem;
+  align-items:center;
+}
+.alineacion-menu li { position: relative; }
+.alineacion-menu a {
+  text-decoration:none;
+  font-size:1rem;
+  font-weight:600;
+  color:white;
+  padding:8px 12px;
+  border-radius:6px;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  transition:all 0.3s ease;
+}
+.alineacion-menu a:hover { background-color:#ffd75e; color:white; }
+
+/* ====== SUBMENÚ ====== */
+.submenu {
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  background:white;
+  min-width:220px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.15);
+  border-radius:8px;
+  overflow:hidden;
+  z-index:999;
+}
+.submenu a {
+  color:#333;
+  padding:10px 15px;
+  border-bottom:1px solid #eee;
+}
+.submenu a:hover { background:#ffd75e; color:white; }
+.alineacion-menu li.show-submenu .submenu { display:block; }
+.arrow { font-size:0.7rem; transition: transform 0.3s ease; }
+.show-submenu > a .arrow { transform:rotate(180deg); }
+
+/* ====== BOTON CREDITOS ====== */
+.boton-creditos {
+  background-color:#ffd75e;
+  border-radius:30px;
+  transition:all 0.3s ease;
+}
+.boton-creditos a {
+  color:white;
+  font-weight:bold;
+  padding:10px 20px;
+  display:inline-block;
+}
+.boton-creditos:hover { background-color:#ffd75e;}
+
+/* ====== HAMBURGUESA ====== */
+.hamburguesa {
+  display: none;
+  flex-direction: column;
+  justify-content: left;
+  cursor: pointer;
+  width: 30px;
+  height: 25px;
+  position: relative;
+  z-index: 1100;
+}
+.hamburguesa span {
+  height: 3px;
+  width: 100%;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.4s ease;
+  position: absolute;
+}
+.hamburguesa span:nth-child(1) { top: 0; }
+.hamburguesa span:nth-child(2) { top: 10px; }
+.hamburguesa span:nth-child(3) { top: 20px; }
+.hamburguesa.active span:nth-child(1) { transform: rotate(45deg); top: 10px; }
+.hamburguesa.active span:nth-child(2) { opacity:0; }
+.hamburguesa.active span:nth-child(3) { transform: rotate(-45deg); top: 10px; }
+
+/* ====== HERO ====== */
+/* ====== HERO ====== */
+/* ===== HERO RESPONSIVE (reemplaza tu bloque actual) ===== */
+.hero {
+  margin-top: 10px;
+  position: relative;
+  width: 100%;
+  height: 100vh; /* se mantiene para escritorio según pediste */
+  background: url("Imagenes/banner-adminhotel.png") no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 8%;
+  color: #ffd75e;
+  background-attachment: scroll;
+}
+
+/* usamos posicionamiento absoluto para colocar los botones sin romper el diseño desktop */
+.hero-content {
+  position: absolute;
+  left: 5%;
+  bottom: 25px;            /* visual similar al margin-top:480px que usabas */
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  /* no margin-top para evitar diferencias entre pantallas */
+}
+
+/* botones: mismos estilos visuales pero sin márgenes que rompen el flow responsive */
+.btn-hero {
+  background: #ffd75e;
+  color: #b45a1d;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 30px;
+  transition: all 0.3s ease-in-out;
+  margin: 0;               /* quitar margen negativo para responsive */
+  display: inline-block;
+  white-space: nowrap;
+}
+.btn-hero:hover {
+  background: #b45a1d;
+  color: #ffd75e;
+  transform: translateY(3px);
+}
+
+.btn-regresar {
+  background: #ffd75e;
+  color: #b45a1d;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 11px 28px;
+  border-radius: 30px;
+  margin: 0;               /* quitar margen negativo para responsive */
+  transition: all 0.3s ease-in-out;
+  display: inline-block;
+  white-space: nowrap;
+}
+.btn-regresar:hover {
+  background: #b45a1d;
+  color: #ffd75e;
+  transform: translateY(3px);
+}
+
+/* ====== ADAPTACIONES PARA TABLETS / MÓVILES ====== */
+
+/* Tablet: <= 900px (ajusta sin tocar aspecto de escritorio) */
+@media (max-width: 900px) {
+  .hero {
+    height: 40vh;                 /* menos alto para que el banner no coma toda la pantalla */
+    padding-left: 6%;
+    background-position: center top;
+  }
+  .hero-content {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -30px;
+    gap: 18px;
+  }
+  .btn-hero, .btn-regresar {
+    padding: -30px 20px;
+    font-size: 0.98rem;
+  }
+}
+
+/* Móvil: <= 480px — apilar los botones y centrarlos (ARREGLADO) */
+@media (max-width: 480px) {
+  .hero {
+    height: 20vh;                 /* compacto según tu preferencia */
+    padding-left: 4%;
+    background-position: center 30%;
+  }
+
+  .hero-content {
+    position: absolute;
+    left: 43%;                    /* centrar horizontalmente (más fiable) */
+    transform: translateX(-50%);
+    bottom: -60px;                  /* mantener dentro de la vista, evita negativos */
+    gap: 12px;                    /* separación vertical entre botones */
+    display: flex;
+    align-items: center;
+    width: calc(60% - 32px);     /* usar ancho útil del viewport */
+    max-width: 420px;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .btn-hero,
+  .btn-regresar {
+    width: 100%;
+    padding: 10px 14px;           /* padding razonable para que el texto no se mueva */
+    text-align: center;
+    margin: 0;
+    display: inline-flex;         /* asegurar centrado vertical/horizontal del texto */
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;          /* evitar que el texto se rompa en dos líneas */
+    box-sizing: border-box;
+  }
+
+  /* Si quieres que el texto pueda envolver en pantallas ultra-pequeñas,
+     elimina white-space: nowrap; y ajusta font-size si es necesario */
+}
+
+/* Muy pequeño (<=360px) — ajusta texto y padding para que no rompa */
+@media (max-width: 360px) {
+  .hero { height: 30vh; background-position: center 100%; }
+  .btn-hero, .btn-regresar { padding: 9px 12px; font-size: 0.95rem; }
+}
+/* ====== BLOQUE DE INFORMACIÓN DE LA CARRERA ====== */
+.info-carrera {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+/* Ajuste del cuadro de la descripción de la carrera */
+.descripcion-carrera {
+  flex: 1;
+  background: #fff;
+  padding: 30px 20px;      /* más espacio arriba/abajo para hacerla más alta */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px #b45a1da1;
+  text-align: center;
+  max-width: 600px;        /* limita la anchura para que no se vea ancha */
+  width: 100%;             /* ocupa el ancho disponible hasta max-width */
+  transition: transform 0.4s ease, box-shadow 0.4s ease; /* animación */
+}
+
+.descripcion-carrera:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 24px #b45a1da1;
+}
+.descripcion-carrera h3 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #b45a1d;
+}
+.descripcion-carrera p {
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ====== SECCION CLASES ====== */
+.clases-section {
+  padding: 80px 10%;
+  background: #fff;
+  text-align: center;
+}
+.titulo-clases {
+  font-size: 2.5rem;
+  color: #ffd75e;
+  margin-bottom: 40px;
+  padding: 15px 40px;
+  display: inline-block;
+  background: linear-gradient(135deg,#b45a1d, #953f06);
+  border-radius: 50px;
+  transition: transform 0.3s ease;
+}
+.titulo-clases:hover {
+  transform: scale(1.05);
+}
+.contenedor-grados {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+.bloque-clases { width: 48%; }
+.btn-toggle {
+  background: linear-gradient(90deg,#ffd75e,#ffd75e);
+  color: #b45a1d;
+  border: none;
+  font-size: 1.1rem;
+  padding: 12px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  position: relative;
+}
+.btn-toggle.active::after { transform: rotate(180deg); }
+.btn-toggle:hover { background: linear-gradient(270deg, #b45a1d, #953f06); transform: scale(1.05); color: #ffd75e; }
+
+/* === Distribución en filas (3 columnas) para .clases-lista === */
+/* Mantiene el colapso por max-height y el toggle que ya usas */
+.clases-lista {
+  max-height: 0;
+  overflow: hidden;                  /* oculta cuando está colapsado */
+  padding: 0 0;
+  transition: max-height 0.45s ease, padding 0.25s ease;
+  display: grid;                     /* ahora es grid para filas/columnas */
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 columnas por fila */
+  gap: 12px;                          /* separación entre tarjetas */
+  align-items: start;
+  justify-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Estado abierto: dejar suficiente altura y permitir scroll vertical si hace falta */
+.clases-lista.show {
+  max-height: 1000px;               /* suficiente para ver varias filas; ajusta si quieres */
+  padding: 12px 8px;
+  overflow: auto;                   /* scroll si excede la altura */
+}
+
+/* Tarjetas mantienen el mismo estilo visual pero adaptadas al grid */
+.clase-card {
+  width: 100%;                       /* ocupa la columna */
+  max-width: 260px;                 /* límite visual igual al estilo anterior */
+  padding: 12px 10px;
+  text-align: center;
+  border-radius: 6px;
+  background: #b45a1d;
+  color: #ffd75e;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s;
+  box-sizing: border-box;
+}
+
+/* Hover igual que antes */
+.clase-card:hover {
+  background: #ffd75e;
+  color: #b45a1d;
+  transform: translateY(-3px);
+}
+
+/* Scrollbar discreto para la lista (opcional) */
+.clases-lista.show::-webkit-scrollbar { width: 10px; height: 10px; }
+.clases-lista.show::-webkit-scrollbar-thumb {
+  background: rgba(77,14,30,0.45);
+  border-radius: 6px;
+}
+
+/* ===== Ajustes responsivos: 2 columnas en tablets, 1 columna en móviles ===== */
+@media (max-width: 900px) {
+  .clases-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .clase-card { max-width: 220px; }
+  
+}
+
+@media (max-width: 480px) {
+  .clases-lista { grid-template-columns: 1fr; gap: 10px; }
+  .clase-card { max-width: 100%; }
+  .clases-lista.show { max-height: 800px; } /* ajustar si quieres más/menos altura visible */
+  .titulo-clases {
+    font-size: 2rem;
+    padding: 12px 30px;}
+}
+
+
+/* ====== MISION Y VISION (MODIFICADAS: pastilla, centrado y animación) ====== */
+.mision-vision {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  padding: 50px 10%;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+/* centramos el título (pastilla) respecto a la caja de contenido */
+.mision,
+.vision {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* importante para centrar la pastilla sobre la caja */
+}
+
+/* pastilla que cubre solo el texto y usa los mismos tonos de la página */
+.titulo-mv {
+  display: inline-block;
+  background: linear-gradient(90deg,#b45a1d, #953f06);
+  color: #ffd75e;
+  font-size: 1.6rem;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 25px;
+  text-align: center;
+  margin: 0 0 18px 0;
+  transition: transform 0.28s ease, background 0.28s ease, box-shadow 0.28s ease;
+  cursor: default;
+}
+
+/* efecto al pasar el mouse sobre la pastilla */
+.titulo-mv:hover {
+  transform: scale(1.06);
+  background: linear-gradient(90deg,#953f06, #b45a1d);
+  box-shadow: 0 8px 18px rgba(52,121,29,0.18);
+}
+
+/* contenido debajo de la pastilla (misma altura) */
+.contenido-mv {
+  flex: 1;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px #b45a1da1;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.6;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* animación al pasar el mouse sobre la caja de contenido */
+.contenido-mv:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 24px #b45a1da1;
+}
+
+/* ====== RAZONES PARA ESTUDIAR LA CARRERA ====== */
+.razones-section {
+  padding: 80px 10%;
+  background: #f9f9f9;
+  text-align: center;
+}
+.titulo-razones {
+  font-size: 2.5rem;
+  color: #ffd75e;
+  margin-bottom: 40px;
+  padding: 15px 40px;
+  display: inline-block;
+  background: linear-gradient(135deg,#b45a1d, #953f06);
+  border-radius: 50px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+/* animación para el título Razones */
+.titulo-razones:hover {
+  transform: scale(1.06);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.18);
+}
+
+/* imágenes apiladas verticalmente y alineadas a la izquierda (más grandes) */
+.razones-imagenes {
+  display: flex;
+  flex-direction: column; /* pone las imágenes una debajo de la otra */
+  align-items: center;    /* centra horizontalmente */
+  gap: 30px;              /* espacio entre las imágenes */
+  margin: 40px auto;      /* centra todo el contenedor y separa del resto */
+}
+
+.razones-imagenes .imagen-razon {
+  width: 60%;             /* ancho más grande de la imagen */
+  max-width: 600px;       /* opcional para no sobrepasar cierto tamaño */
+  height: auto;           /* mantiene proporción */
+  border-radius: 12px;
+   transition: transform 0.3s ease;
+}
+.razones-imagenes .imagen-razon:hover {
+  transform: scale(1.05);
+}
+
+.razones-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: auto;
+  gap: 20px;
+  justify-items: center;
+  align-items: start;
+}
+/* Razones individuales */
+.razon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 220px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.razon-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+}
+.razon-icon {
+  display: inline-block;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #b45a1d;
+  padding: 12px;
+  border-radius: 50%;
+  background: #ffd75e;
+  box-shadow: 0 4px 8px #b45a1d;
+}
+.razon-icon {
+  margin-bottom: 10px; /* icono arriba del texto */
+  color: #b45a1d; /* puedes cambiar color del icono */
+}
+
+.razon-card.especial {
+  margin: 40px auto 0 auto;
+  grid-column: 1 / -1;
+  max-width: 350px;
+}
+/* Última razón centrada debajo de las demás */
+.razones-grid .razon-card:nth-child(7) {
+  grid-column: 2; /* Centrada en la segunda columna */
+  margin-top: 20px;
+}
+
+/* Responsivo: en móviles se muestra en 1 columna */
+@media (max-width: 768px) {
+  .razones-grid {
+    grid-template-columns: 1fr;
+  }
+  .razones-grid .razon-card:nth-child(7) {
+    grid-column: auto;
+  }
+}
+
+/* ====== FOOTER ====== */
+footer {
+  margin-top:50px;
+  background:linear-gradient(90deg,#b45a1d, #953f06);
+  color:white;
+  padding:40px 20px;
+}
+.footer-container {
+  display:flex;
+  justify-content:center;
+  gap:250px;
+  max-width:900px;
+  margin:auto;
+  flex-wrap:wrap;
+}
+.footer-logo { display:flex; align-items:center; gap:15px; }
+.footer-logo img { width:100px; }
+.logo-text { display:flex; align-items:center; gap:20px; }
+.vertical-line { width:2px; height:100px; background-color:white; }
+.vertical-ipmra { font-size:1rem; font-weight:700; line-height:1.2; white-space:pre-line; text-align:center; }
+.footer-contact ul { list-style:none; padding:0; }
+.footer-contact h4 { margin-bottom:15px; font-size:1.1rem; border-bottom:2px solid white; display:inline-block; padding-bottom:5px; }
+.footer-contact li { margin-bottom:8px; }
+.footer-contact a { text-decoration:none; color:white; font-size:1.1rem; }
+.boton-facebook { background-color:#ffd75e; padding:3px 8px; border-radius:30px; transition:all 0.3s ease; }
+.boton-facebook:hover { background-color:#b45a1d; color: #ffd75e; }
+.footer-bottom { text-align:center; margin-top:30px; font-size:0.9rem; border-top:1px solid rgba(255,255,255,0.3); padding-top:15px; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 900px) {
+  .contenedor-grados { flex-direction: column; }
+  .bloque-clases { width: 100%; }
+  .footer-container { flex-direction: column; gap:20px; align-items:center; }
+  .contenedor-razones { gap: 15px; }
+}
+@media (max-width: 768px) {
+  .alineacion-menu {
+    display:none;
+    flex-direction:column;
+    gap:1rem;
+    background: linear-gradient(90deg,#b45a1d, #953f06);
+    width:100%;
+    border-radius:8px;
+    animation:slideDown 0.4s ease forwards;
+    position:absolute;
+    top:100%;
+    left:0;
+  }
+  .alineacion-menu.show { display:flex; }
+  @keyframes slideDown { from { opacity:0; transform:translateY(-20px);} to { opacity:1; transform:translateY(0); } }
+  .hamburguesa { display:flex; }
+  .hero-content h1 { font-size: 2.2rem; }
+  .info-carrera { flex-direction: column; align-items: center; }
+
+  /* para pantallas pequeñas, apilar las imágenes y centrarlas */
+  .razones-imagenes {
+    align-items: center;
+  }
+
+  .imagen-razon {
+    width: 90%;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+  <div class="hero-content">
+    <!-- Botón CLASES y REGRESAR juntos -->
+    <a href="carreras.html" class="btn-regresar">🡸 CARRERAS</a>
+    <a href="#clases" class="btn-hero">CLASES</a>
+  </div>
+</section>
+ 
+
+  <!-- MENU -->
+  <header>
+    <nav class="menu" id="menu">
+      <div class="alineacion-imra-logo">
+        <a href="index.html">
+          <span class="alineacion-logo"><img src="Imagenes/IMRA-logo.png" alt="logo" width="40px"></span>
+          <span class="alineacion-imra">IPMRA</span>
+        </a>
+        <div class="hamburguesa" id="hamburguesa">
+          <span></span><span></span><span></span>
+        </div>
+        <ul class="alineacion-menu" id="menu-opciones">
+          <li><a href="index.html">Inicio</a></li>
+          <li>
+            <a href="#">Nosotros <span class="arrow">▼</span></a>
+            <ul class="submenu">
+              <li><a href="nuestra-identidad.html">Nuestra Identidad</a></li>
+              <li><a href="departamentos.html">Departamentos</a></li>
+              <li><a href="maestros.html">Maestros</a></li>
+              <li><a href="instalaciones.html">Instalaciones</a></li>
+            </ul>
+          </li>
+          <li><a href="carreras.html">Oferta Academica</a></li>
+          <li><a href="matriculas.html">Matrículas</a></li>
+          <li class="boton-creditos"><a href="creditos.html">Créditos</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- SECCIÓN CLASES -->
+  <section id="clases" class="clases-section">
+    <div class="info-carrera">
+      <div class="descripcion-carrera">
+        <h3>Bachillerato Técnico Profesional en Administración Hotelera</h3>
+        <p>
+        El Bachillerato Técnico Profesional en Administración Hotelera es una carrera de nivel medio que combina la formación académica general con una preparación técnica especializada en la gestión de servicios de hospedaje, alimentos, bebidas y turismo. Su propósito es capacitar a los estudiantes en competencias administrativas, operativas y de hospitalidad, fomentando valores de ética, servicio y responsabilidad social, para que puedan integrarse al sector productivo o continuar estudios superiores en áreas afines.
+        </p>
+      </div>
+    </div>
+    <br><br>
+    <h2 class="titulo-clases">Clases de Administración Hotelera</h2>
+    <br><br><br>
+    <div class="contenedor-grados">
+      <div class="bloque-clases">
+        <button class="btn-toggle" data-target="grado11">11vo de Hotelera</button>
+        <div id="grado11" class="clases-lista">
+          <div class="clase-card">Matemáticas Financiera</div>
+          <div class="clase-card">Español</div>
+          <div class="clase-card">Educación y Apreciación Artística</div>
+          <div class="clase-card">Legislación</div>
+          <div class="clase-card">Filosofía</div>
+          <div class="clase-card">Gestión Empresarial</div>
+          <div class="clase-card">Inglés Técnico</div>
+          <div class="clase-card">Técnicas de Recepción y Conserjería</div>
+          <div class="clase-card">Gestión de Habitaciones y Lavandería</div>
+          <div class="clase-card">Venta y Manejo de Caja en Hotelería</div>
+          <div class="clase-card">Introducción al Turismo</div>
+          <div class="clase-card">Seguridad Laboral en Empresas Hotelras</div>
+        </div>
+      </div>
+
+      <div class="bloque-clases">
+        <button class="btn-toggle" data-target="grado12">12vo de Hotelera</button>
+        <div id="grado12" class="clases-lista">
+          <div class="clase-card">Introducción al Área de Alimentos y Bebidas</div>
+          <div class="clase-card">Cocina Básica</div>
+          <div class="clase-card">Preparación de Alimentos para Cócteles</div>
+          <div class="clase-card">Planificación y Control de Alimentos y Bebidas</div>
+          <div class="clase-card">Elaboración de Menu y Vino</div>
+          <div class="clase-card">Técnicas de Servicio en Restaurante</div>
+          <div class="clase-card">Técnicas de Servicio en Bar</div>
+          <div class="clase-card">Organización y Ejecución de Eventos</div>
+          <div class="clase-card">Fundamentos de Administración Hotelera</div>
+          <div class="clase-card">Sistemas de Comunicaciones Turísticas</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN MISIÓN Y VISIÓN -->
+  <section class="mision-vision">
+    <div class="mision">
+      <span class="titulo-mv">Misión</span>
+      <div class="contenido-mv">
+        <p>
+        Formar bachilleres técnicos en administración hotelera con conocimientos sólidos en gestión de alojamiento, alimentos, bebidas y turismo, promoviendo la hospitalidad, la ética profesional, la innovación y el compromiso social, para que puedan integrarse al mercado laboral o continuar estudios superiores.
+        </p>
+      </div>
+    </div>
+
+    <div class="vision">
+      <span class="titulo-mv">Visión</span>
+      <div class="contenido-mv">
+        <p>
+        Ser una carrera reconocida a nivel nacional por la calidad en la formación de jóvenes capaces de liderar y transformar el sector hotelero y turístico, aportando al desarrollo sostenible, a la excelencia en el servicio y al posicionamiento de Honduras como un destino competitivo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN RAZONES PARA ESTUDIAR LA CARRERA -->
+  <section class="razones-section">
+    <h2 class="titulo-razones">Razones para estudiar la carrera</h2>
+
+    <div class="razones-grid">
+      <div class="razon-card">
+        <div class="razon-icon">
+          
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="40" height="40">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zM6 20c0-2.21 3.58-4 6-4s6 1.79 6 4v1H6v-1z"/>
+        </svg>
+        </div>
+        Amplias oportunidades laborales.
+      </div>
+
+      <div class="razon-card">
+        <div class="razon-icon">
+          
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="40" height="40">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M12 6v12m6-6H6"/>
+        </svg>
+        </div>
+        Formación práctica y aplicable.
+      </div>
+
+      <div class="razon-card">
+        <div class="razon-icon">
+          
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="40" height="40">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M18 9a3 3 0 11-6 0 3 3 0 016 0zM6 9a3 3 0 11-6 0 3 3 0 016 0zm12 6a6 6 0 00-12 0"/>
+        </svg>
+        </div>
+        Puerta hacia estudios superiores.
+      </div>
+
+      <div class="razon-card">
+        <div class="razon-icon">
+          
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="40" height="40">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M12 3v9m0 0l-3-3m3 3l3-3m-9 6h12"/>
+        </svg>
+        </div>
+        Desarrollo de habilidades sociales y de servicio.
+      </div>
+
+      <div class="razon-card">
+        <div class="razon-icon">
+          
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="40" height="40">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20"/>
+        </svg>
+        </div>
+        Mentalidad emprendedora.
+      </div>
+<div class="razon-card">
+  <div class="razon-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="40" height="40">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M9 20H4v-2a3 3 0 015.356-1.857M15 11a4 4 0 10-8 0 4 4 0 008 0z" />
+    </svg>
+  </div>
+  Conexión con la cultura y el turismo de Honduras.
+</div>
+      <div class="razon-card especial">
+        <div class="razon-icon">
+          
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="40" height="40">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 21l1.5-7.5L3 9l18-6-6 18-4.5-4.5L10.5 21z" />
+    </svg>
+  </div>
+        Proyección internacional.
+      </div>
+    </div>
+  </section>
+
+  <!--IMAGENES
+  <div class="razones-imagenes">
+    <img src="Img/H1.jpeg" alt="Imagen 1 de Hotelera" class="imagen-razon">
+    <img src="Img/H2.jpg" alt="Imagen 2 de Hotelera" class="imagen-razon">
+  </div>-->
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="Imagenes/IMRA-logo.png" alt="logo">
+        <div class="logo-text">
+          <div class="vertical-line"></div>
+          <span class="vertical-ipmra">I<br>P<br>M<br>R<br>A</span>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <h4>Síguenos en nuestra red social</h4>
+        <ul>
+          <li>
+            <a class="boton-facebook" href="https://www.facebook.com/profile.php?id=100064632464818" target="_blank">
+              <img src="Imagenes/facebook.png" alt="facebook" width="16px"> Visita nuestro Facebook
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Instituto Polivalente Modesto Rodas Alvarado - Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    // Scroll efecto en menú
+    window.addEventListener("scroll", function() {
+      const menu = document.getElementById("menu");
+      if (window.scrollY > 50) {
+        menu.classList.add("scrolled");
+      } else {
+        menu.classList.remove("scrolled");
+      }
+    });
+
+    // Scroll suave botón "CLASES" centrando contenedor
+    document.querySelector('.btn-hero').addEventListener('click', function(e) {
+      e.preventDefault();
+
+      const seccionClases = document.querySelector('#clases');
+      const contenedorGrados = seccionClases.querySelector('.contenedor-grados');
+
+      const windowHeight = window.innerHeight;
+      const contentHeight = contenedorGrados.offsetHeight;
+
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = contenedorGrados.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+
+      let offsetPosition;
+      if (contentHeight < windowHeight) {
+        offsetPosition = elementPosition - (windowHeight - contentHeight)/2;
+      } else {
+        offsetPosition = elementPosition - 70; // espacio desde menú
+      }
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    });
+
+    // Submenú
+    document.querySelectorAll(".alineacion-menu li > a").forEach(link => {
+      link.addEventListener("click", function(e) {
+        const parent = this.parentElement;
+        if (parent.querySelector(".submenu")) {
+          e.preventDefault();
+          parent.classList.toggle("show-submenu");
+        }
+      });
+    });
+
+    // Menú hamburguesa
+    const hamburguesa = document.getElementById("hamburguesa");
+    const menuOpciones = document.getElementById("menu-opciones");
+    hamburguesa.addEventListener("click", () => {
+      hamburguesa.classList.toggle("active");
+      menuOpciones.classList.toggle("show");
+    });
+
+    // Toggle de listas 11vo y 12vo con scroll suave
+    document.querySelectorAll('.btn-toggle').forEach(boton => {
+      boton.addEventListener('click', function(e) {
+        const target = document.getElementById(boton.dataset.target);
+
+        // Alternar la lista
+        target.classList.toggle('show');
+        boton.classList.toggle('active');
+
+        // Scroll suave
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = boton.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offset = 70;
+
+        window.scrollTo({
+          top: elementPosition - offset,
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
